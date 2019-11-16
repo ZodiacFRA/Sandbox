@@ -4,7 +4,7 @@
 
 #include "Entity.hpp"
 
-ID ecs::entity::Entity::getId() {
+ID ecs::Entity::getId() {
     thread_local static ID id = 0;
     return (id++);
 }
