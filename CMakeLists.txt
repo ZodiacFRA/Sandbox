@@ -5,9 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(ecs)
 include_directories(Workers)
-
-include_directories("/usr/include/irrlicht")
-set(CMAKE_CXX_FLAGS "-W -Wextra -Wall -Werror -std=c++11")
+include_directories("${PROJECT_SOURCE_DIR}/lib/irrlicht-1.8.4/include")
 
 add_executable(Sandbox
         ecs/ComponentBase.hpp
@@ -27,5 +25,5 @@ add_executable(Sandbox
         Workers/ThreadPool.hpp
         Main.cpp)
 
-TARGET_LINK_LIBRARIES(Sandbox
-        "/usr/lib/x86_64-linux-gnu/libIrrlicht.so")
+TARGET_LINK_LIBRARIES(Sandbox "${PROJECT_SOURCE_DIR}/lib/libIrrlicht.so.1.8.4")
+        #"/usr/lib64/libIrrlicht.so.1.8.4")
