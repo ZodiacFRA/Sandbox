@@ -7,6 +7,7 @@ include_directories(ecs)
 include_directories(Workers)
 
 include_directories("/usr/include/irrlicht")
+set(CMAKE_CXX_FLAGS "-W -Wextra -Wall -Werror -std=c++11")
 
 add_executable(Sandbox
         ecs/ComponentBase.hpp
