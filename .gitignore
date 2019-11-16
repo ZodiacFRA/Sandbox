@@ -7,3 +7,6 @@ Makefile
 Sandbox
 *Klang*
 ikpMP3.so
+
+# TODO delete and replace by using conan
+CMakeLists.txt

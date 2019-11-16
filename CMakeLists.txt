@@ -7,6 +7,8 @@ include_directories(ecs)
 include_directories(Workers)
 include_directories("${PROJECT_SOURCE_DIR}/lib/irrlicht-1.8.4/include")
 
+#include_directories("/usr/include/irrlicht")
+
 add_executable(Sandbox
         ecs/ComponentBase.hpp
         ecs/ComponentList.hpp
@@ -25,5 +27,5 @@ add_executable(Sandbox
         Workers/ThreadPool.hpp
         Main.cpp)
 
-TARGET_LINK_LIBRARIES(Sandbox "${PROJECT_SOURCE_DIR}/lib/libIrrlicht.so.1.8.4")
-        #"/usr/lib64/libIrrlicht.so.1.8.4")
+TARGET_LINK_LIBRARIES(Sandbox #"${PROJECT_SOURCE_DIR}/lib/libIrrlicht.so.1.8.4")
+        "/usr/lib/x86_64-linux-gnu/libIrrlicht.so")
