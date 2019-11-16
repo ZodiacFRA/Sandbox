@@ -123,6 +123,7 @@ public:
 	void update () {
 		for (auto &func : updates) {
 			func.second();
+			std::cout << func.first << std::endl;
 		}
 	}
 
@@ -155,10 +156,10 @@ private:
 
 /// Irrlicht attributes
 public:
-	std::shared_ptr<IrrlichtDevice>		device;
-	std::shared_ptr<IVideoDriver>		driver;
-	std::shared_ptr<ISceneManager>		smgr;
-	std::shared_ptr<IGUIEnvironment>	guienv;
+	IrrlichtDevice*		device;
+	IVideoDriver*		driver;
+	ISceneManager*		smgr;
+	IGUIEnvironment*	guienv;
 
 };
 //}

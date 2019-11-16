@@ -10,6 +10,7 @@
 #include <chrono>
 #include <Time.hpp>
 #include <thread>
+#include <Updates.hpp>
 #include "component/AnimatedMeshScene.hpp"
 
 using namespace irr;
@@ -21,11 +22,14 @@ using namespace io;
 using namespace gui;
 
 int main() {
-	auto ecs = Ecs::get();
+	auto &ecs = Ecs::get();
+	auto upd = Updates();
 	long time;
 
 	auto id = ecs::Entity::getId();
 	ecs.addComponent<AnimatedMeshScene>(id, "./asset/sydney.md2", "./asset/sydney.bmp");
+	ecs.addComponent<Position>(id, 0.0, 0.0, 0.0);
+	ecs.addComponent<Speed>(id, 1.0, 0.0, 0.0);
 
 	ecs.smgr->addCameraSceneNode(0, vector3df(0,30,-40), vector3df(0,5,0));
 

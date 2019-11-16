@@ -2,19 +2,19 @@
 // Created by seb on 16/11/2019.
 //
 
-#ifndef SANDBOX_ANIMATEDMESHSCENE_HPP
-#define SANDBOX_ANIMATEDMESHSCENE_HPP
+#pragma once
 
 #include <Ecs.hpp>
 
 struct AnimatedMeshScene {
+	AnimatedMeshScene() = default;
 	AnimatedMeshScene(std::string meshPath, std::string texturePath) {
-		this->mesh = std::shared_ptr<IAnimatedMesh>(Ecs::get().smgr->getMesh(meshPath.c_str()));
+		this->mesh = Ecs::get().smgr->getMesh(meshPath.c_str());
 		if (!this->mesh) {
 			Ecs::get().device->drop();
 		}
 
-		this->node = std::shared_ptr<IAnimatedMeshSceneNode>(Ecs::get().smgr->addAnimatedMeshSceneNode(this->mesh.get()));
+		this->node = Ecs::get().smgr->addAnimatedMeshSceneNode(this->mesh);
 		if (this->node) {
 			this->node->setMaterialFlag(EMF_LIGHTING, false);
 			this->node->setMD2Animation(scene::EMAT_STAND);
@@ -22,9 +22,7 @@ struct AnimatedMeshScene {
 		}
 	}
 
-	std::shared_ptr<IAnimatedMesh> mesh;
-	std::shared_ptr<IAnimatedMeshSceneNode> node;
+
+	IAnimatedMeshSceneNode* node;
+	IAnimatedMesh* mesh;
 };
-
-
-#endif //SANDBOX_ANIMATEDMESHSCENE_HPP
