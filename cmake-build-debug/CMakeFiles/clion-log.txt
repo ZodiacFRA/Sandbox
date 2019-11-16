@@ -1,0 +1,4 @@
+/home/seb/bin/cmake-3.13.1-Linux-x86_64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/seb/Sandbox
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/seb/Sandbox/cmake-build-debug

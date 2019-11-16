@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Sandbox"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/seb/Sandbox/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/seb/Sandbox/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sandbox">
+				<Option output="/home/seb/Sandbox/cmake-build-debug/Sandbox" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/seb/Sandbox/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/seb/Sandbox/ecs"/>
+					<Add directory="/home/seb/Sandbox/Workers"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 Sandbox"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sandbox/fast">
+				<Option output="/home/seb/Sandbox/cmake-build-debug/Sandbox" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/seb/Sandbox/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/seb/Sandbox/ecs"/>
+					<Add directory="/home/seb/Sandbox/Workers"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 Sandbox/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/seb/Sandbox/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/seb/Sandbox/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/seb/Sandbox/Main.cpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/Workers/ThreadPool.cpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/Workers/ThreadPool.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/ComponentBase.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/ComponentList.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/DataBank.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/Ecs.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/Entity.cpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/Entity.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/Time.cpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/Time.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/TimedEvent.cpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/TimedEvent.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/TimedEventAdmin.cpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/TimedEventAdmin.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/ecs/Vector2.hpp">
+			<Option target="Sandbox"/>
+		</Unit>
+		<Unit filename="/home/seb/Sandbox/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
