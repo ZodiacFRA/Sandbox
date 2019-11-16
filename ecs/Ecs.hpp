@@ -123,7 +123,6 @@ public:
 	void update () {
 		for (auto &func : updates) {
 			func.second();
-			std::cout << func.first << std::endl;
 		}
 	}
 

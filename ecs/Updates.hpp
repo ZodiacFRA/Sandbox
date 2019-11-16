@@ -35,7 +35,6 @@ public:
 			auto ids = ecs.filter<Position, Speed>();
 
 			for (const auto &id : ids) {
-				std::cout << "bonjour" << std::endl;
 				pos[id].pos += speed[id].speed;
 			}
 		});
