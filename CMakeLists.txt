@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(ecs)
 include_directories(Workers)
 
+set(CMAKE_CXX_FLAGS "-W -Wextra -Wall -Werror -std=c++11")
+
 add_executable(Sandbox
         ecs/ComponentBase.hpp
         ecs/ComponentList.hpp
@@ -22,4 +24,5 @@ add_executable(Sandbox
         ecs/Vector2.hpp
         Workers/ThreadPool.cpp
         Workers/ThreadPool.hpp
-        Main.cpp)
+        Main.cpp
+)
