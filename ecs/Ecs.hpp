@@ -12,6 +12,7 @@
 #include <map>
 #include <set>
 #include "ComponentList.hpp"
+#include "../update/KeyboardEvent.hpp"
 
 ///include Graphical
 #include <irrlicht.h>
@@ -160,5 +161,6 @@ public:
 	ISceneManager*		smgr;
 	IGUIEnvironment*	guienv;
 
+public:
+	KeyboardEvent	keyboardEvent;
 };
-//}

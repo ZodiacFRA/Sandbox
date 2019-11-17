@@ -6,7 +6,7 @@
 
 Ecs::Ecs() {
 	this->device = createDevice( video::EDT_SOFTWARE, dimension2d<u32>(640, 480), 16,
-			      false, false, false, 0);
+			      false, false, false, &keyboardEvent);
 
 	device->setWindowCaption(L"Le jeux de ses morts");
 	this->driver = device->getVideoDriver();
