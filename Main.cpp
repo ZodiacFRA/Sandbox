@@ -47,15 +47,37 @@ int main() {
 	ecs.addComponent<SceneNode>(id, "./asset/sydney.md2", "./asset/sydney.bmp");
 	ecs.addComponent<Speed>(id, 0.0, 0.0, 0.0);
 	ecs.addComponent<Keyboard>(id);
-	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Z] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
+	keyboard[id].keyMap[EKEY_CODE::KEY_ESCAPE] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
+		ecs.device->closeDevice();
+	});
+	/*keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Z] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
+		auto &speed = ecs.getComponentMap<Speed>();
+		if (pressed)
+			speed[id].speed.Y = .5;
+		else
+			speed[id].speed.Y = 0;
+	});
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Q] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
+		auto &speed = ecs.getComponentMap<Speed>();
+		if (pressed)
+			speed[id].speed.X = -.5;
+		else
+			speed[id].speed.X = 0;
+	});
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_S] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
+		auto &speed = ecs.getComponentMap<Speed>();
+		if (pressed)
+			speed[id].speed.Y = -.5;
+		else
+			speed[id].speed.Y = 0;
+	});
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_D] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
 		auto &speed = ecs.getComponentMap<Speed>();
 		if (pressed)
 			speed[id].speed.X = .5;
 		else
 			speed[id].speed.X = 0;
-	});
-
-	ecs.smgr->addCameraSceneNode(0, vector3df(0,30,-40), vector3df(0,5,0));
+	});*/
 
 	ecs.addUpdate(100, [&ecs](){
 		ecs.driver->beginScene(true, true, SColor(255,100,101,140));
@@ -63,6 +85,20 @@ int main() {
 		ecs.guienv->drawAll();
 		ecs.driver->endScene();
 	});
+
+	//ecs.smgr->addCameraSceneNode(0, vector3df(0,30,-40), vector3df(0,0,0));
+	auto cam = ecs.smgr->addCameraSceneNodeFPS();
+	cam->setFOV(45);
+	//cam->setNearValue(0.000001f);
+	//cam->setFarValue(2000.0f);
+	ecs.device->getFileSystem()->addFileArchive("./asset/map-20kdm2.pk3");
+	scene::IAnimatedMesh* mesh = ecs.smgr->getMesh("20kdm2.bsp");
+	scene::ISceneNode* node = 0;
+
+	if (mesh)
+		node = ecs.smgr->addOctreeSceneNode(mesh->getMesh(0), 0, -1, 1024);
+	if (node)
+		node->setPosition(core::vector3df(-1300,-144,-1249));
 
 	while(ecs.device->run()) {
 		time = ecs::Time::get(TimeUnit::MicroSeconds);
