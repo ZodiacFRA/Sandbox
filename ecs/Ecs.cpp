@@ -5,7 +5,7 @@
 #include "Ecs.hpp"
 
 Ecs::Ecs() {
-	this->device = createDevice( video::EDT_SOFTWARE, dimension2d<u32>(640, 480), 16,
+	this->device = createDevice( video::EDT_OPENGL, dimension2d<u32>(640, 480), 16,
 			      false, false, false, &keyboardEvent);
 
 	device->setWindowCaption(L"Le jeux de ses morts");
