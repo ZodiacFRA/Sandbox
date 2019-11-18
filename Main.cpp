@@ -50,34 +50,6 @@ int main() {
 	keyboard[id].keyMap[EKEY_CODE::KEY_ESCAPE] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
 		ecs.device->closeDevice();
 	});
-	/*keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Z] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
-		auto &speed = ecs.getComponentMap<Speed>();
-		if (pressed)
-			speed[id].speed.Y = .5;
-		else
-			speed[id].speed.Y = 0;
-	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Q] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
-		auto &speed = ecs.getComponentMap<Speed>();
-		if (pressed)
-			speed[id].speed.X = -.5;
-		else
-			speed[id].speed.X = 0;
-	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_S] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
-		auto &speed = ecs.getComponentMap<Speed>();
-		if (pressed)
-			speed[id].speed.Y = -.5;
-		else
-			speed[id].speed.Y = 0;
-	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_D] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
-		auto &speed = ecs.getComponentMap<Speed>();
-		if (pressed)
-			speed[id].speed.X = .5;
-		else
-			speed[id].speed.X = 0;
-	});*/
 
 	ecs.addUpdate(100, [&ecs](){
 		ecs.driver->beginScene(true, true, SColor(255,100,101,140));
@@ -87,13 +59,33 @@ int main() {
 	});
 
 	//ecs.smgr->addCameraSceneNode(0, vector3df(0,30,-40), vector3df(0,0,0));
-	auto cam = ecs.smgr->addCameraSceneNodeFPS();
+	SKeyMap keyMap[8];
+	keyMap[0].Action = EKA_MOVE_FORWARD;
+	keyMap[0].KeyCode = KEY_UP;
+	keyMap[1].Action = EKA_MOVE_FORWARD;
+	keyMap[1].KeyCode = KEY_KEY_Z;
+
+	keyMap[2].Action = EKA_MOVE_BACKWARD;
+	keyMap[2].KeyCode = KEY_DOWN;
+	keyMap[3].Action = EKA_MOVE_BACKWARD;
+	keyMap[3].KeyCode = KEY_KEY_S;
+
+	keyMap[4].Action = EKA_STRAFE_LEFT;
+	keyMap[4].KeyCode = KEY_LEFT;
+	keyMap[5].Action = EKA_STRAFE_LEFT;
+	keyMap[5].KeyCode = KEY_KEY_Q;
+
+	keyMap[6].Action = EKA_STRAFE_RIGHT;
+	keyMap[6].KeyCode = KEY_RIGHT;
+	keyMap[7].Action = EKA_STRAFE_RIGHT;
+	keyMap[7].KeyCode = KEY_KEY_D;
+	auto cam = ecs.smgr->addCameraSceneNodeFPS(0, 100.F, 0.5f, -1, keyMap, 8);
 	cam->setFOV(45);
 	//cam->setNearValue(0.000001f);
 	//cam->setFarValue(2000.0f);
 	ecs.device->getFileSystem()->addFileArchive("./asset/map-20kdm2.pk3");
 	scene::IAnimatedMesh* mesh = ecs.smgr->getMesh("20kdm2.bsp");
-	scene::ISceneNode* node = 0;
+	scene::ISceneNode* node = nullptr;
 
 	if (mesh)
 		node = ecs.smgr->addOctreeSceneNode(mesh->getMesh(0), 0, -1, 1024);
