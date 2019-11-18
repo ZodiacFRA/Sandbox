@@ -79,14 +79,11 @@ int main() {
 	keyMap[6].KeyCode = KEY_RIGHT;
 	keyMap[7].Action = EKA_STRAFE_RIGHT;
 	keyMap[7].KeyCode = KEY_KEY_D;
-	auto cam = ecs.smgr->addCameraSceneNodeFPS(0, 100.F, 0.5f, -1, keyMap, 8);
-	cam->setFOV(45);
-	//cam->setNearValue(0.000001f);
-	//cam->setFarValue(2000.0f);
+	auto cam = ecs.smgr->addCameraSceneNodeFPS(0, 300.F, 0.3f, -1, keyMap, 8);
+
 	ecs.device->getFileSystem()->addFileArchive("./asset/map-20kdm2.pk3");
 	scene::IAnimatedMesh* mesh = ecs.smgr->getMesh("20kdm2.bsp");
 	scene::ISceneNode* node = nullptr;
-
 	if (mesh)
 		node = ecs.smgr->addOctreeSceneNode(mesh->getMesh(0), 0, -1, 1024);
 	if (node)
