@@ -80,6 +80,7 @@ int main() {
 	keyMap[7].Action = EKA_STRAFE_RIGHT;
 	keyMap[7].KeyCode = KEY_KEY_D;
 	auto cam = ecs.smgr->addCameraSceneNodeFPS(0, 300.F, 0.3f, -1, keyMap, 8);
+	ecs.device->getCursorControl()->setVisible(false);
 
 	ecs.device->getFileSystem()->addFileArchive("./asset/map-20kdm2.pk3");
 	scene::IAnimatedMesh* mesh = ecs.smgr->getMesh("20kdm2.bsp");
