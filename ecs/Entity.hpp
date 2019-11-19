@@ -2,8 +2,7 @@
 // Created by seble on 01/11/2018.
 //
 
-#ifndef ECS_ENTITY_HPP
-#define ECS_ENTITY_HPP
+#pragma once
 
 using ID = unsigned long;
 
@@ -15,6 +14,3 @@ namespace ecs {
         	static ID getId();
         };
 }
-
-
-#endif //ECS_ENTITY_HPP
