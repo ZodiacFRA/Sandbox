@@ -12,8 +12,8 @@
 #include <thread>
 #include "Update.hpp"
 #include <DataBank.hpp>
-#include <Player.hpp>
-#include <Map.hpp>
+#include <interface/Player.hpp>
+#include <interface/Map.hpp>
 
 using namespace irr;
 

@@ -39,10 +39,10 @@ add_executable(Sandbox
         SBEngine/component/FpsCamera.hpp
         SBEngine/component/Speed.hpp
 
-        game/Player.cpp
-        game/Player.hpp
-        game/Map.cpp
-        game/Map.hpp
+        SBEngine/interface/Player.cpp
+        SBEngine/interface/Player.hpp
+        SBEngine/interface/Map.cpp
+        SBEngine/interface/Map.hpp
 
         Main.cpp)
 
