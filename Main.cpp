@@ -10,7 +10,7 @@
 #include <chrono>
 #include <Time.hpp>
 #include <thread>
-#include "update/Updates.hpp"
+#include "Update.hpp"
 #include <DataBank.hpp>
 #include <Player.hpp>
 #include <Map.hpp>
@@ -24,7 +24,7 @@ using namespace io;
 using namespace gui;
 
 int main() {
-	auto update = Updates();
+	auto update = Update();
 	auto &ecs = Ecs::get();
 	ecs.keyboardEvent.initialised = true;
 	long time;
@@ -42,16 +42,9 @@ int main() {
 		return Ecs::get().driver->getTexture(texturePath.c_str());
 	};
 
-	ecs.addUpdate(100, [&ecs](){
-		ecs.driver->beginScene(true, true, SColor(255,100,101,140));
-		ecs.smgr->drawAll();
-		ecs.guienv->drawAll();
-		ecs.driver->endScene();
-	});
-
 	Map::createMap();
 	ID player = Player::createPlayer();
-	Player::addFpsCamera(player);
+	//Player::addFpsCamera(player);
 
 	while(ecs.device->run()) {
 		time = ecs::Time::get(TimeUnit::MicroSeconds);

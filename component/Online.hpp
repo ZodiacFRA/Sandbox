@@ -7,9 +7,5 @@
 #include <Entity.hpp>
 
 struct Online {
-	Online(ID id) {
-		this->id = id;
-	}
-
-	ID id
+	Online() {}
 };

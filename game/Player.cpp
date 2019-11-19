@@ -7,18 +7,48 @@
 #include <Speed.hpp>
 #include <controllers/Keyboard.hpp>
 #include <SceneNode.hpp>
+#include <Online.hpp>
+#include <FpsCamera.hpp>
 
 ID Player::createPlayer() {
 	auto &ecs = Ecs::get();
 	auto &keyboard = ecs.getComponentMap<Keyboard>();
+	auto &speed = ecs.getComponentMap<Speed>();
 	auto id = ecs::Entity::getId();
 
 	ecs.addComponent<SceneNode>(id, "./asset/sydney.md2", "./asset/sydney.bmp");
-	ecs.addComponent<Speed>(id, 0.0, 0.0, 0.0);
+	//ecs.addComponent<Online>(id);
+	ecs.addComponent<Speed>(id, 0.1, 0.0, 0.0);
 	ecs.addComponent<Keyboard>(id);
 	keyboard[id].keyMap[EKEY_CODE::KEY_ESCAPE] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
-		ecs.device->closeDevice();
+		if (pressed)
+			ecs.device->closeDevice();
 	});
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Z] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+		if (pressed)
+			speed[id].speed.X = 10.0;
+		else
+			speed[id].speed.X = 0.0;
+	});
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Q] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+		if (pressed)
+			speed[id].speed.Z = 10.0;
+		else
+			speed[id].speed.Z = 0.0;
+	});
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_S] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+		if (pressed)
+			speed[id].speed.X = -10.0;
+		else
+			speed[id].speed.X = 0.0;
+	});
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_D] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+		if (pressed)
+			speed[id].speed.Z = -10.0;
+		else
+			speed[id].speed.Z = 0.0;
+	});
+	ecs.addComponent<FpsCamera>(id, id);
 
 	return id;
 }

@@ -11,8 +11,9 @@
 #include <memory>
 #include <map>
 #include <set>
+
 #include "ComponentList.hpp"
-#include "../update/KeyboardEvent.hpp"
+#include "KeyboardEvent.hpp"
 
 ///include Graphical
 #include <irrlicht.h>
