@@ -44,7 +44,7 @@ int main() {
 	};
 
 	MapCreator::createMap();
-	PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp");
+	PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(0, 0, 0), vector3df(0, 0, 0));
 
 	while(ecs.device->run()) {
 		long time = ecs::Time::get(TimeUnit::MicroSeconds);

@@ -12,14 +12,12 @@
 #include <FpsCamera.hpp>
 #include <component/controllers/Mouse.hpp>
 
-ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath) {
+ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, vector3df position, vector3df rotation) {
 	auto &ecs = Ecs::get();
 	auto &keyboard = ecs.getComponentMap<Keyboard>();
 	auto &mouse = ecs.getComponentMap<Mouse>();
 	auto &speed = ecs.getComponentMap<Speed>();
-	auto id = ObjectCreator::createObject(meshPath, texturePath);
-
-	ecs.addComponent<SceneNode>(id, "./assets/sydney.md2", "./assets/sydney.bmp");
+	auto id = ObjectCreator::createObject(meshPath, texturePath, position, rotation);
 
 	//ecs.addComponent<Online>(id);
 	ecs.addComponent<Speed>(id, 0.1, 0.0, 0.0);
@@ -57,7 +55,7 @@ ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath) {
 	mouse[id].onMove = [id, &ecs](int x, int y){
 		if (x != 640/2 || y != 480/2) {
 			std::cout << "Mouse: " << (110.0 / 640.0) * ((float)x - 640.0 / 2.0) / 100 << std::endl;
-			auto &node = ecs.getComponentMap<SceneNode>()[id];
+			auto node = ecs.getComponentMap<SceneNode>()[id];
 			auto rot = node.node->getRotation();
 			node.node->setRotation(rot - vector3df(0,110.0 / 640.0 * ((float)(x) - 640.0 / 2.0) / 85.0, 0));
 			ecs.device->getCursorControl()->setPosition(640/2, 480/2);
