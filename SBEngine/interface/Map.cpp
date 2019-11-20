@@ -8,7 +8,7 @@
 void Map::createMap() {
 	auto &ecs = Ecs::get();
 
-	ecs.device->getFileSystem()->addFileArchive("./asset/map-20kdm2.pk3");
+	ecs.device->getFileSystem()->addFileArchive("./assets/map-20kdm2.pk3");
 	scene::IAnimatedMesh* mesh = ecs.smgr->getMesh("20kdm2.bsp");
 	scene::ISceneNode* node = nullptr;
 	if (mesh)

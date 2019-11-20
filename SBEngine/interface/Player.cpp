@@ -16,7 +16,7 @@ ID Player::createPlayer() {
 	auto &speed = ecs.getComponentMap<Speed>();
 	auto id = ecs::Entity::getId();
 
-	ecs.addComponent<SceneNode>(id, "./asset/sydney.md2", "./asset/sydney.bmp");
+	ecs.addComponent<SceneNode>(id, "./assets/sydney.md2", "./assets/sydney.bmp");
 	//ecs.addComponent<Online>(id);
 	ecs.addComponent<Speed>(id, 0.1, 0.0, 0.0);
 	ecs.addComponent<Keyboard>(id);

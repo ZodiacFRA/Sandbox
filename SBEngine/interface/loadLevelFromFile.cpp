@@ -13,7 +13,7 @@ enum object_type {
 	PLAYER = 2
 };
 
-struct object {
+struct obj_struct {
 	std::string name;
 	object_type type;
 	std::vector<float> pos;
@@ -28,20 +28,23 @@ struct object {
 };
 
 
-int loadLevelFromFile(std::string levelpath)
+std::vector<obj_struct> loadLevelFromFile(std::string levelpath)
 {
 	pt::ptree tree;
 	pt::read_json(levelpath, tree);
 
-	std::vector<object> obj_library;
+	std::vector<obj_struct> obj_library;
 
 	for (auto obj = tree.begin() ; obj != tree.end() ; obj++) {
-		object tmp;
+		obj_struct tmp;
 		tmp.name = obj->first;
 
-	// OBJ TYPE
+		std::string globalType = "";
+
+		// OBJ TYPE
 		try {
 			std::string type = obj->second.get<std::string>("type");
+			globalType = type;
 			if (type == "MESH")
 			tmp.type = object_type::MESH;
 			else if (type == "LIGHT")
@@ -63,8 +66,8 @@ int loadLevelFromFile(std::string levelpath)
 			continue;
 		}
 
-	// NON LIGHT OBJECT PROPERTIES
-		if (tmp.type != "LIGHT") {
+		// NON LIGHT OBJECT PROPERTIES
+		if (globalType != "LIGHT") {
 			try {
 				tmp.mesh_name = obj->second.get<std::string>("mesh_name");
 			} catch (pt::ptree_bad_path) {

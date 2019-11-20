@@ -26,13 +26,16 @@ add_executable(Sandbox
         SBEngine/ecs/TimedEvent.hpp
         SBEngine/ecs/TimedEventAdmin.cpp
         SBEngine/ecs/TimedEventAdmin.hpp
-        SBEngine/update/Update.hpp
-        SBEngine/update/KeyboardEvent.hpp
-        SBEngine/ecs/Vector2.hpp
+	SBEngine/ecs/Vector2.hpp
+
         SBEngine/Workers/ThreadPool.cpp
         SBEngine/Workers/ThreadPool.hpp
+
+	SBEngine/update/Update.hpp
+	SBEngine/update/KeyboardEvent.hpp
         SBEngine/update/KeyboardEvent.cpp
         SBEngine/update/Update.cpp
+
         SBEngine/component/controllers/Keyboard.hpp
         SBEngine/component/SceneNode.hpp
         SBEngine/component/Online.hpp
@@ -43,8 +46,10 @@ add_executable(Sandbox
         SBEngine/interface/Player.hpp
         SBEngine/interface/Map.cpp
         SBEngine/interface/Map.hpp
+        SBEngine/interface/loadLevelFromFile.cpp
 
-        Main.cpp)
+        Main.cpp
+)
 
 if (WIN32)
     target_link_libraries(Sandbox ${CMAKE_CURRENT_LIST_DIR}/lib/irrlicht/Irrlicht.dll)
