@@ -15,5 +15,6 @@ using namespace core;
 
 class PlayerCreator {
 public:
+	static ID createPlayer(std::string meshPath, std::string texturePath, vector3df position, vector3df rotation);
 	static ID createPlayer(std::string meshPath, std::string texturePath, std::vector<float> position, std::vector<float> rotation);
 };

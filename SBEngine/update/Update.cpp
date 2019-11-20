@@ -66,6 +66,7 @@ void Update::fpsCamera() {
 	for(const auto &id : ids) {
 		auto rot = node[id].node->getRotation();
 		cam[id].camera->setTarget(node[id].node->getPosition() + vector3df(cos(rot.Y) * 100, 0, sin(rot.Y) * 100));
+		cam[id].camera->setPosition(node[id].node->getPosition() + vector3df(cos(rot.Y) * 2, 0, sin(rot.Y) * 2));
 	}
 }
 

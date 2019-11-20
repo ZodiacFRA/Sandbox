@@ -12,7 +12,7 @@
 #include <FpsCamera.hpp>
 #include <component/controllers/Mouse.hpp>
 
-ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, std::vector<float> position, std::vector<float> rotation) {
+ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, vector3df position, vector3df rotation) {
 	auto &ecs = Ecs::get();
 	auto &keyboard = ecs.getComponentMap<Keyboard>();
 	auto &mouse = ecs.getComponentMap<Mouse>();
@@ -66,4 +66,8 @@ ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, st
 	ecs.addComponent<FpsCamera>(id, id, node.node->getPosition() + vector3df(0, 31, 0));
 
 	return id;
+}
+
+ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, std::vector<float> position, std::vector<float> rotation) {
+	return createPlayer(meshPath, texturePath, vector3df(position[0], position[1], position[2]), vector3df(rotation[0], rotation[1], rotation[2]));
 }

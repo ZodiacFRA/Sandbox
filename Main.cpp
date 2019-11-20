@@ -44,8 +44,8 @@ int main() {
 	};
 
 	loadLevelFromFile("SB_test");
-	// MapCreator::createMap();
-	// PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(0, 0, 0), vector3df(0, 0, 0));
+	//MapCreator::createMap();
+	//PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(0, 0, 0), vector3df(0, 0, 0));
 
 	while(ecs.device->run()) {
 		long time = ecs::Time::get(TimeUnit::MicroSeconds);
