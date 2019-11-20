@@ -30,9 +30,10 @@ EXPORT_PATH = "/home/zodiac/Code/Perso/GamesTests/Sandbox/assets/maps"
 
 if __name__ == '__main__':
     print('-'*50)
-    level_name = "test" #input("Enter map name: ")
+    level_name = input("Enter map name: ")
     objs_export_path = f"{EXPORT_PATH}/{level_name}/OBJS"
-    shutil.rmtree(objs_export_path)
+    if os.path.exists(objs_export_path):
+        shutil.rmtree(objs_export_path)
     os.makedirs(objs_export_path)
     # Deselect all objects in the scene
     for obj in bpy.data.objects:
