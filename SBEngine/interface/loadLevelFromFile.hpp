@@ -4,6 +4,10 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 
+#include <interface/PlayerCreator.hpp>
+#include <interface/ObjectCreator.hpp>
+
+
 using namespace std;
 namespace pt = boost::property_tree;
 
@@ -28,4 +32,4 @@ struct obj_struct {
 };
 
 
-std::vector<obj_struct> loadLevelFromFile(std::string levelpath);
+void loadLevelFromFile(std::string levelName);

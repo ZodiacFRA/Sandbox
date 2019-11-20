@@ -1,12 +1,13 @@
 #include "loadLevelFromFile.hpp"
 
 
-std::vector<obj_struct> loadLevelFromFile(std::string levelpath)
+void loadLevelFromFile(std::string levelName)
 {
+	std::string levelPath = "./assets/maps/" + levelName + "/";
+	std::string meshesPath = "./assets/maps/" + levelName + "/OBJS/";
 	pt::ptree tree;
-	pt::read_json(levelpath, tree);
-
-	std::vector<obj_struct> obj_library;
+	std::cout << levelPath << '\n';
+	pt::read_json(levelPath + "test.json", tree);
 
 	for (auto obj = tree.begin() ; obj != tree.end() ; obj++) {
 		obj_struct tmp;
@@ -19,13 +20,13 @@ std::vector<obj_struct> loadLevelFromFile(std::string levelpath)
 			std::string type = obj->second.get<std::string>("type");
 			globalType = type;
 			if (type == "MESH")
-			tmp.type = object_type::MESH;
+				tmp.type = object_type::MESH;
 			else if (type == "LIGHT")
-			tmp.type = object_type::LIGHT;
+				tmp.type = object_type::LIGHT;
 			else if (type == "PLAYER")
-			tmp.type = object_type::PLAYER;
+				tmp.type = object_type::PLAYER;
 			else
-			std::cout << "Unknown obj type" << '\n';
+				std::cout << "Unknown obj type" << '\n';
 		} catch (pt::ptree_bad_path) {
 			std::cout << "No type found for object " << tmp.name << '\n';
 			continue;
@@ -77,13 +78,19 @@ std::vector<obj_struct> loadLevelFromFile(std::string levelpath)
 			}
 		}
 
-		printf("name: %s\ttype: %d\tpos: %f, %f, %f\trot: %f, %f, %f\tsize: %f, %f, %f\n",
+		printf("LOADING name: %s\ttype: %d\tpos: %f, %f, %f\trot: %f, %f, %f\tsize: %f, %f, %f\n",
 				tmp.name.c_str(), tmp.type,
 				tmp.pos[0], tmp.pos[1], tmp.pos[2],
 				tmp.rot[0], tmp.rot[1], tmp.rot[2],
 				tmp.size[0], tmp.size[1], tmp.size[2]
 		);
-		obj_library.push_back(tmp);
+
+		if (tmp.type == object_type::MESH)
+			ObjectCreator::createObject(meshesPath + tmp.mesh_name + ".obj", tmp.tex_name, tmp.pos, tmp.rot);
+		else if (tmp.type == object_type::PLAYER) {
+			std::cout << "CREATED PLAYER" << '\n';
+			PlayerCreator::createPlayer(meshesPath + tmp.mesh_name + ".obj", tmp.tex_name, tmp.pos, tmp.rot);
+		} else
+			std::cout << "creation not implemented" << '\n';
 	}
-	return obj_library;
 }

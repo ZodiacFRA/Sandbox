@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 
 import bpy
 
@@ -28,10 +29,11 @@ class obj_struct(object):
 EXPORT_PATH = "/home/zodiac/Code/Perso/GamesTests/Sandbox/assets/maps"
 
 if __name__ == '__main__':
+    print('-'*50)
     level_name = "test" #input("Enter map name: ")
     objs_export_path = f"{EXPORT_PATH}/{level_name}/OBJS"
-    if not os.path.exists(objs_export_path):
-        os.makedirs(objs_export_path)
+    shutil.rmtree(objs_export_path)
+    os.makedirs(objs_export_path)
     # Deselect all objects in the scene
     for obj in bpy.data.objects:
         obj.select_set(state=False)
@@ -41,10 +43,15 @@ if __name__ == '__main__':
     for obj in bpy.data.objects:
         print(f"Exporting {obj.name}")
         res = obj_struct(obj.name)
-        res.type = obj.type
+        print(obj.name[:6])
+        if obj.name[:6] == "Player":
+            res.type = "PLAYER"
+        else:
+            res.type = obj.type
         res.pos = [obj.location[0], obj.location[1], obj.location[2]]
 
-        if obj.type == "MESH" or obj.type == "PLAYER":
+
+        if obj.type == "MESH":
             res.mesh_name = obj.data.name
             if res.mesh_name not in exported_meshes:
                 # If we don't do that, the location will be stored in the .obj as well

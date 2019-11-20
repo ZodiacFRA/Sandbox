@@ -43,8 +43,9 @@ int main() {
 		return Ecs::get().driver->getTexture(texturePath.c_str());
 	};
 
-	MapCreator::createMap();
-	PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(0, 0, 0), vector3df(0, 0, 0));
+	loadLevelFromFile("test");
+	// MapCreator::createMap();
+	// PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(0, 0, 0), vector3df(0, 0, 0));
 
 	while(ecs.device->run()) {
 		long time = ecs::Time::get(TimeUnit::MicroSeconds);
