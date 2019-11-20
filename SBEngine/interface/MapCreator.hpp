@@ -4,7 +4,7 @@
 
 #pragma  once
 
-class Map {
+class MapCreator {
 public:
 	static void createMap();
 };

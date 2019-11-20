@@ -3,9 +3,9 @@
 //
 
 #include <Ecs.hpp>
-#include "Map.hpp"
+#include "MapCreator.hpp"
 
-void Map::createMap() {
+void MapCreator::createMap() {
 	auto &ecs = Ecs::get();
 
 	ecs.device->getFileSystem()->addFileArchive("./assets/map-20kdm2.pk3");

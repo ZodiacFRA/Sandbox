@@ -15,6 +15,7 @@ public:
 	Update();
 
 	static void online();
+	static void speed();
 	static void fpsCamera();
 	static void keyboard();
 

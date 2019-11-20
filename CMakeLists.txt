@@ -26,27 +26,31 @@ add_executable(Sandbox
         SBEngine/ecs/TimedEvent.hpp
         SBEngine/ecs/TimedEventAdmin.cpp
         SBEngine/ecs/TimedEventAdmin.hpp
-	SBEngine/ecs/Vector2.hpp
+	    SBEngine/ecs/Vector2.hpp
 
         SBEngine/Workers/ThreadPool.cpp
         SBEngine/Workers/ThreadPool.hpp
 
-	SBEngine/update/Update.hpp
-	SBEngine/update/KeyboardEvent.hpp
+	    SBEngine/update/Update.hpp
+	    SBEngine/update/KeyboardEvent.hpp
         SBEngine/update/KeyboardEvent.cpp
         SBEngine/update/Update.cpp
 
         SBEngine/component/controllers/Keyboard.hpp
+        SBEngine/component/controllers/Mouse.hpp
         SBEngine/component/SceneNode.hpp
         SBEngine/component/Online.hpp
         SBEngine/component/FpsCamera.hpp
         SBEngine/component/Speed.hpp
 
-        SBEngine/interface/Player.cpp
-        SBEngine/interface/Player.hpp
-        SBEngine/interface/Map.cpp
-        SBEngine/interface/Map.hpp
         SBEngine/interface/loadLevelFromFile.cpp
+        SBEngine/interface/loadLevelFromFile.hpp
+        SBEngine/interface/PlayerCreator.cpp
+        SBEngine/interface/PlayerCreator.hpp
+        SBEngine/interface/ObjectCreator.cpp
+        SBEngine/interface/ObjectCreator.hpp
+        SBEngine/interface/MapCreator.cpp
+        SBEngine/interface/MapCreator.hpp
 
         Main.cpp
 )

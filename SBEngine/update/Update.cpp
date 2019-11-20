@@ -13,16 +13,8 @@ Update::Update()  {
 	/*ecs.addUpdate(20, [](){
 		Update::keyboard();
 	});*/
-	ecs.addUpdate(20, [&ecs](){
-		auto &anim = ecs.getComponentMap<SceneNode>();
-		auto &speed = ecs.getComponentMap<Speed>();
-
-		auto ids = ecs.filter<Speed>();
-
-		for (const auto &id : ids) {
-			vector3d<f32> pos = anim[id].node->getPosition();
-			anim[id].node->setPosition(pos + speed[id].speed);
-		}
+	ecs.addUpdate(20, [](){
+		Update::speed();
 	});
 	ecs.addUpdate(20, [](){
 		Update::fpsCamera();
@@ -49,6 +41,19 @@ void Update::online() {
 		std::cout << "ID: " << id << std::endl;
 		std::cout << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
 		std::cout << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
+	}
+}
+
+void Update::speed() {
+	auto &ecs = Ecs::get();
+	auto &anim = ecs.getComponentMap<SceneNode>();
+	auto &speed = ecs.getComponentMap<Speed>();
+
+	auto ids = ecs.filter<Speed>();
+
+	for (const auto &id : ids) {
+		vector3d<f32> pos = anim[id].node->getPosition();
+		anim[id].node->setPosition(pos + speed[id].speed);
 	}
 }
 

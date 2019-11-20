@@ -12,8 +12,9 @@
 #include <thread>
 #include "Update.hpp"
 #include <DataBank.hpp>
-#include <interface/Player.hpp>
-#include <interface/Map.hpp>
+#include <interface/PlayerCreator.hpp>
+#include <interface/MapCreator.hpp>
+#include "interface/loadLevelFromFile.hpp"
 
 using namespace irr;
 
@@ -27,7 +28,7 @@ int main() {
 	auto update = Update();
 	auto &ecs = Ecs::get();
 	ecs.keyboardEvent.initialised = true;
-	long time;
+	ecs.device->getCursorControl()->setVisible(false);
 
 	ecs::DataBank<std::string, IAnimatedMesh*>::get().creator = [](std::string meshPath){
 		auto mesh = Ecs::get().smgr->getMesh(meshPath.c_str());
@@ -42,12 +43,11 @@ int main() {
 		return Ecs::get().driver->getTexture(texturePath.c_str());
 	};
 
-	Map::createMap();
-	ID player = Player::createPlayer();
-	//Player::addFpsCamera(player);
+	MapCreator::createMap();
+	PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp");
 
 	while(ecs.device->run()) {
-		time = ecs::Time::get(TimeUnit::MicroSeconds);
+		long time = ecs::Time::get(TimeUnit::MicroSeconds);
 		ecs.update();
 
 		auto x = static_cast<unsigned int>(16666 - (ecs::Time::get(TimeUnit::MicroSeconds) - time) > 0 ? 16666 - (ecs::Time::get(TimeUnit::MicroSeconds) - time) : 0);
