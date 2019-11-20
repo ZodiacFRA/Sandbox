@@ -7,7 +7,7 @@ void loadLevelFromFile(std::string levelName)
 	std::string meshesPath = "./assets/maps/" + levelName + "/OBJS/";
 	pt::ptree tree;
 	std::cout << levelPath << '\n';
-	pt::read_json(levelPath + "test.json", tree);
+	pt::read_json(levelPath + levelName + ".json", tree);
 
 	for (auto obj = tree.begin() ; obj != tree.end() ; obj++) {
 		obj_struct tmp;
