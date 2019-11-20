@@ -43,7 +43,7 @@ int main() {
 		return Ecs::get().driver->getTexture(texturePath.c_str());
 	};
 
-	loadLevelFromFile("test");
+	loadLevelFromFile("SB_test");
 	// MapCreator::createMap();
 	// PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(0, 0, 0), vector3df(0, 0, 0));
 
