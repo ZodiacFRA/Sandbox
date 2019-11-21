@@ -54,7 +54,9 @@ void Update::speed() {
 	for (const auto &id : ids) {
 		auto pos = anim[id].node->getPosition();
 		auto rot = anim[id].node->getRotation();
-		anim[id].node->setPosition(pos + vector3df(cos(rot.Y) * speed[id].speed, 0, -sin(rot.Y) * speed[id].speed));
+		std::cout << "Speed: " << rot.Y << std::endl;
+//		std::cout << "Speed: " << cos(rot.Y / 180 * PI) * speed[id].speed << " " << -sin(rot.Y / 180 * PI) * speed[id].speed << std::endl;
+		anim[id].node->setPosition(pos + vector3df(cos(rot.Y / 180 * PI) * speed[id].speed, 0, -sin(rot.Y / 180 * PI) * speed[id].speed));
 	}
 }
 
@@ -70,15 +72,10 @@ void Update::fpsCamera() {
 		auto target = vector3df(cos(rot.Y) * 100, 0, sin(rot.Y) * 100) -
 			      vector3df(0, tan(rot.X) * 100, 0);
 		cam[id].camera->setTarget(pos + target);
-		cam[id].camera->setPosition(
-					    vector3df(cos(rot.Y) * 3, 31, sin(rot.Y) * 3));;
-//		cam[id].camera->setPosition(vector3df(0, 0, 0));
+		cam[id].camera->setPosition(vector3df(cos(rot.Y) * 3, 31, sin(rot.Y) * 3));;
 
-		auto absolute = cam[id].camera->getAbsoluteTransformation().getRotationDegrees();
-//		node[cam[id].parent].node->setRotation(vector3df(0, 180, 0));
-
-		std::cout << target.X << " " << target.Z << " " << target.Y << " " << atan(target.X / target.Z) * 180 / PI << std::endl;
-		node[cam[id].parent].node->setRotation(vector3df(0, atan(target.X / target.Z) * 180 / PI, 0));
+//		std::cout << target.X << " " << target.Z << " " << target.Y << " " << -atan2(target.Z, target.X) * 180 / PI << std::endl;
+		node[cam[id].parent].node->setRotation(vector3df(0, -atan2(target.Z, target.X) * 180 / PI, 0));
 	}
 }
 
