@@ -78,11 +78,10 @@ ID PlayerCreator::createFpsCamera(ID player) {
 			float y_fov = 110.0;
 			float y_size = 480.0;
 
-			float delta_x = ((x_fov / x_size) * ((float)(x) - (x_size / 2.0))) / x_sens;
-			float delta_y = ((y_fov / y_size) * ((float)(y) - (y_size / 2.0))) / y_sens;
+			float delta_x = ((x_fov / x_size) * ((double)(x) - (x_size / 2.0))) / x_sens;
+			float delta_y = ((y_fov / y_size) * ((double)(y) - (y_size / 2.0))) / y_sens;
 			cam.camera->setRotation(rot - vector3df(0, delta_x, 0));
 			cam.camera->setRotation(cam.camera->getRotation() + vector3df(delta_y, 0, 0));
-//			parent->setRotation(parent->getRotation() + vector3df(delta_y,  0, 0));
 			ecs.device->getCursorControl()->setPosition(640/2, 480/2);
 		}
 	};
