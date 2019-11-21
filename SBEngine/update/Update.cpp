@@ -38,9 +38,9 @@ void Update::online() {
 	for (const auto &id: ids) {
 		auto pos = node[id].node->getPosition();
 		auto rot = node[id].node->getRotation();
-		std::cout << "ID: " << id << std::endl;
-		std::cout << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
-		std::cout << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
+//		std::cout << "ID: " << id << std::endl;
+//		std::cout << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
+//		std::cout << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
 	}
 }
 
@@ -49,11 +49,12 @@ void Update::speed() {
 	auto &anim = ecs.getComponentMap<SceneNode>();
 	auto &speed = ecs.getComponentMap<Speed>();
 
-	auto ids = ecs.filter<Speed>();
+	auto ids = ecs.filter<Speed, SceneNode>();
 
 	for (const auto &id : ids) {
-		vector3d<f32> pos = anim[id].node->getPosition();
-		anim[id].node->setPosition(pos + speed[id].speed);
+		auto pos = anim[id].node->getPosition();
+		auto rot = anim[id].node->getRotation();
+		anim[id].node->setPosition(pos + vector3df(cos(rot.Y) * speed[id].speed, 0, -sin(rot.Y) * speed[id].speed));
 	}
 }
 
@@ -61,12 +62,23 @@ void Update::fpsCamera() {
 	auto &ecs = Ecs::get();
 	auto &cam = ecs.getComponentMap<FpsCamera>();
 	auto &node = ecs.getComponentMap<SceneNode>();
-	auto ids = ecs.filter<FpsCamera, SceneNode>();
+	auto ids = ecs.filter<FpsCamera>();
 
 	for(const auto &id : ids) {
-		auto rot = node[id].node->getRotation();
-		cam[id].camera->setTarget(node[id].node->getPosition() + vector3df(cos(rot.Y) * 100, 0, sin(rot.Y) * 100));
-		cam[id].camera->setPosition(node[id].node->getPosition() + vector3df(cos(rot.Y) * 2, 0, sin(rot.Y) * 2));
+		const auto rot = cam[id].camera->getRotation();
+		const auto pos = node[cam[id].parent].node->getPosition();
+		auto target = vector3df(cos(rot.Y) * 100, 0, sin(rot.Y) * 100) -
+			      vector3df(0, tan(rot.X) * 100, 0);
+		cam[id].camera->setTarget(pos + target);
+		cam[id].camera->setPosition(
+					    vector3df(cos(rot.Y) * 3, 31, sin(rot.Y) * 3));;
+//		cam[id].camera->setPosition(vector3df(0, 0, 0));
+
+		auto absolute = cam[id].camera->getAbsoluteTransformation().getRotationDegrees();
+//		node[cam[id].parent].node->setRotation(vector3df(0, 180, 0));
+
+		std::cout << target.X << " " << target.Z << " " << target.Y << " " << atan(target.X / target.Z) * 180 / PI << std::endl;
+		node[cam[id].parent].node->setRotation(vector3df(0, atan(target.X / target.Z) * 180 / PI, 0));
 	}
 }
 

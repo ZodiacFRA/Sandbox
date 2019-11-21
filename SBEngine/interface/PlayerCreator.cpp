@@ -15,12 +15,11 @@
 ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, vector3df position, vector3df rotation) {
 	auto &ecs = Ecs::get();
 	auto &keyboard = ecs.getComponentMap<Keyboard>();
-	auto &mouse = ecs.getComponentMap<Mouse>();
 	auto &speed = ecs.getComponentMap<Speed>();
 	auto id = ObjectCreator::createObject(meshPath, texturePath, position, rotation);
 
 	//ecs.addComponent<Online>(id);
-	ecs.addComponent<Speed>(id, 0.1, 0.0, 0.0);
+	ecs.addComponent<Speed>(id, 0.0);
 	ecs.addComponent<Keyboard>(id);
 	keyboard[id].keyMap[EKEY_CODE::KEY_ESCAPE] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
 		if (pressed)
@@ -28,46 +27,66 @@ ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, ve
 	});
 	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Z] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.X = 10.0;
+			speed[id].speed = 10.0;
 		else
-			speed[id].speed.X = 0.0;
+			speed[id].speed = 0.0;
 	});
 	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Q] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.Z = 10.0;
+			speed[id].speed = 10.0;
 		else
-			speed[id].speed.Z = 0.0;
+			speed[id].speed = 0.0;
 	});
 	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_S] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.X = -10.0;
+			speed[id].speed = 10.0;
 		else
-			speed[id].speed.X = 0.0;
+			speed[id].speed = 0.0;
 	});
 	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_D] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.Z = -10.0;
+			speed[id].speed = 10.0;
 		else
-			speed[id].speed.Z = 0.0;
+			speed[id].speed = 0.0;
 	});
-
-	ecs.addComponent<Mouse>(id);
-	mouse[id].onMove = [id, &ecs](int x, int y){
-		if (x != 640/2 || y != 480/2) {
-			std::cout << "Mouse: " << (110.0 / 640.0) * ((float)x - 640.0 / 2.0) / 100 << std::endl;
-			auto node = ecs.getComponentMap<SceneNode>()[id];
-			auto rot = node.node->getRotation();
-			node.node->setRotation(rot - vector3df(0,110.0 / 640.0 * ((float)(x) - 640.0 / 2.0) / 85.0, 0));
-			ecs.device->getCursorControl()->setPosition(640/2, 480/2);
-		}
-	};
-
-	auto node = ecs.getComponentMap<SceneNode>()[id];
-	ecs.addComponent<FpsCamera>(id, id, node.node->getPosition() + vector3df(0, 31, 0));
 
 	return id;
 }
 
 ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, std::vector<float> position, std::vector<float> rotation) {
 	return createPlayer(meshPath, texturePath, vector3df(position[0], position[1], position[2]), vector3df(rotation[0], rotation[1], rotation[2]));
+}
+
+ID PlayerCreator::createFpsCamera(ID player) {
+	auto &ecs = Ecs::get();
+	auto id = ecs::Entity::getId();
+	auto &mouse = ecs.getComponentMap<Mouse>();
+	auto parent = ecs.getComponentMap<SceneNode>()[player].node;
+
+	ecs.addComponent<FpsCamera>(id, player, parent->getPosition() + vector3df(0, 31, 0));
+	ecs.addComponent<Mouse>(id);
+	mouse[id].onMove = [id, &ecs, parent](int x, int y){
+		if (x != 640/2 || y != 480/2) {
+			auto cam = ecs.getComponentMap<FpsCamera>()[id];
+			auto rot = cam.camera->getRotation();
+
+			float x_sens = 85.0;
+			float x_fov = 110.0;
+			float x_size = 640.0;
+
+			float y_sens = 85.0;
+			float y_fov = 110.0;
+			float y_size = 480.0;
+
+			float delta_x = ((x_fov / x_size) * ((float)(x) - (x_size / 2.0))) / x_sens;
+			float delta_y = ((y_fov / y_size) * ((float)(y) - (y_size / 2.0))) / y_sens;
+			cam.camera->setRotation(rot - vector3df(0, delta_x, 0));
+			cam.camera->setRotation(cam.camera->getRotation() + vector3df(delta_y, 0, 0));
+			parent->setRotation(cam.camera->getRotation() + vector3df(delta_y,  0, 0));
+			ecs.device->getCursorControl()->setPosition(640/2, 480/2);
+		}
+	};
+
+
+	return 0;
 }

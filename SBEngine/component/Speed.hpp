@@ -8,8 +8,8 @@
 
 struct Speed {
 	Speed() = default;
-	Speed(float x, float y, float z) {
-		this->speed = vector3df(x, y, z);
+	Speed(float speed) {
+		this->speed = speed;
 	}
-	vector3df speed;
+	float speed;
 };

@@ -9,13 +9,14 @@
 
 struct FpsCamera {
 	FpsCamera(): camera(nullptr) {}
-	FpsCamera(ID id, vector3df pos) {
+	FpsCamera(ID parent, vector3df pos): parent(parent) {
 		auto &ecs = Ecs::get();
 		auto &node = ecs.getComponentMap<SceneNode>();
-		auto parent = node[id].node;
+		auto player = node[parent].node;
 
-		camera = ecs.smgr->addCameraSceneNode(parent, pos);
+		camera = ecs.smgr->addCameraSceneNode(player, pos);
 	}
 
+	ID parent;
 	ICameraSceneNode *camera;
 };
