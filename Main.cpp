@@ -43,10 +43,10 @@ int main() {
 		return Ecs::get().driver->getTexture(texturePath.c_str());
 	};
 
-	//loadLevelFromFile("SB_test");
-	auto selector = MapCreator::createMap();
-	PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp",
-								   vector3df(200, 200, 200), vector3df(0, 0, 0), selector));
+	loadLevelFromFile("1");
+	// auto selector = MapCreator::createMap();
+	// PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp",
+								   // vector3df(200, 200, 200), vector3df(0, 0, 0), selector));
 
 	ecs.smgr->addLightSceneNode();
 	while(ecs.device->run()) {

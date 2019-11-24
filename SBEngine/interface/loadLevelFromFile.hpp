@@ -29,6 +29,7 @@ struct obj_struct {
 	std::vector<float> size;
 	// LIGHT PROPERTIES
 	int power;
+	std::vector<float> color;
 };
 
 

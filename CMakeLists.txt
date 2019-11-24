@@ -4,7 +4,7 @@ project(TCPTest)
 
 set(CMAKE_CXX_STANDARD 17)
 find_package(Threads)
-find_package(Boost 1.67.0 REQUIRED COMPONENTS filesystem system)
+find_package(Boost 1.66.0 REQUIRED COMPONENTS filesystem system)
 
 include_directories(SBEngine)
 include_directories(SBEngine/ecs)
@@ -73,8 +73,7 @@ add_executable(TCPTest
         SBEngine/network/server/UDPServer.cpp
         SBEngine/network/server/UDPServer.hpp
 
-        SBEngine/test/MainTest.cpp
-        SBEngine/network/server/UDPConnecion.cpp SBEngine/network/server/UDPConnecion.hpp)
+        SBEngine/test/MainTest.cpp)
 
 if (WIN32)
     target_link_libraries(Sandbox ${CMAKE_CURRENT_LIST_DIR}/lib/irrlicht/Irrlicht.dll)
