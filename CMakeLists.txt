@@ -53,7 +53,7 @@ add_executable(Sandbox
         SBEngine/interface/MapCreator.hpp
 
         Main.cpp
-)
+        SBEngine/network/TCPServer.cpp SBEngine/network/TCPServer.hpp SBEngine/network/TCPConnection.cpp SBEngine/network/TCPConnection.hpp)
 
 if (WIN32)
     target_link_libraries(Sandbox ${CMAKE_CURRENT_LIST_DIR}/lib/irrlicht/Irrlicht.dll)
