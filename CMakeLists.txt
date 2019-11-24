@@ -63,7 +63,7 @@ add_executable(Sandbox
         SBEngine/network/server/TCPConnection.cpp
         SBEngine/network/server/TCPConnection.hpp
         SBEngine/network/server/UDPServer.cpp
-        SBEngine/network/server/UDPServer.hpp SBEngine/network/server/UDPConnecion.cpp SBEngine/network/server/UDPConnecion.hpp SBEngine/component/controllers/Light.hpp)
+        SBEngine/network/server/UDPServer.hpp SBEngine/component/controllers/Light.hpp)
 
 add_executable(TCPTest
         SBEngine/network/server/TCPServer.cpp
@@ -73,7 +73,8 @@ add_executable(TCPTest
         SBEngine/network/server/UDPServer.cpp
         SBEngine/network/server/UDPServer.hpp
 
-        SBEngine/test/MainTest.cpp)
+        SBEngine/test/MainTest.cpp
+        )
 
 if (WIN32)
     target_link_libraries(Sandbox ${CMAKE_CURRENT_LIST_DIR}/lib/irrlicht/Irrlicht.dll)

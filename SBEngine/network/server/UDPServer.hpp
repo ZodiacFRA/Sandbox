@@ -2,8 +2,7 @@
 // Created by seb on 24/11/2019.
 //
 
-#ifndef SANDBOX_UDPSERVER_HPP
-#define SANDBOX_UDPSERVER_HPP
+#pragma once
 
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
@@ -32,5 +31,3 @@ private:
 	char data[max_length];
 };
 
-
-#endif //SANDBOX_UDPSERVER_HPP
