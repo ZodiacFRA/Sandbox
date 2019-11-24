@@ -86,10 +86,10 @@ void loadLevelFromFile(std::string levelName)
 		);
 
 		if (tmp.type == object_type::MESH)
-			ObjectCreator::createObject(meshesPath + tmp.mesh_name + ".obj", tmp.tex_name, tmp.pos, tmp.rot);
+			ObjectCreator::createObject(meshesPath + tmp.mesh_name + ".obj", tmp.tex_name, tmp.pos, tmp.rot, nullptr);
 		else if (tmp.type == object_type::PLAYER) {
 			std::cout << "CREATED PLAYER" << '\n';
-			PlayerCreator::createPlayer(meshesPath + tmp.mesh_name + ".obj", tmp.tex_name, tmp.pos, tmp.rot);
+			PlayerCreator::createPlayer(meshesPath + tmp.mesh_name + ".obj", tmp.tex_name, tmp.pos, tmp.rot, nullptr);
 		} else
 			std::cout << "creation not implemented" << '\n';
 	}

@@ -10,9 +10,9 @@ Update::Update()  {
 	auto &ecs = Ecs::get();
 
 	/// Update Speed
-	/*ecs.addUpdate(20, [](){
+	ecs.addUpdate(20, [](){
 		Update::keyboard();
-	});*/
+	});
 	ecs.addUpdate(20, [](){
 		Update::speed();
 	});
@@ -38,6 +38,7 @@ void Update::online() {
 	for (const auto &id: ids) {
 		auto pos = node[id].node->getPosition();
 		auto rot = node[id].node->getRotation();
+		//TODO: send data through network
 //		std::cout << "ID: " << id << std::endl;
 //		std::cout << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
 //		std::cout << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
@@ -54,7 +55,11 @@ void Update::speed() {
 	for (const auto &id : ids) {
 		auto pos = anim[id].node->getPosition();
 		auto rot = anim[id].node->getRotation();
-		anim[id].node->setPosition(pos + vector3df(cos(rot.Y / 180 * PI) * speed[id].speed, 0, -sin(rot.Y / 180 * PI) * speed[id].speed));
+
+		anim[id].node->setPosition(pos +
+		vector3df(cos((rot.Y) / 180 * PI) * speed[id].speed.Y, 0, -sin((rot.Y) / 180 * PI) * speed[id].speed.Y) +
+		vector3df(cos((rot.Y + 90) / 180 * PI) * speed[id].speed.X, 0, -sin((rot.Y + 90) / 180 * PI) * speed[id].speed.X) +
+		vector3df(0, speed[id].speed.Z, 0));
 	}
 }
 

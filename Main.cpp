@@ -44,8 +44,10 @@ int main() {
 	};
 
 	//loadLevelFromFile("SB_test");
-	MapCreator::createMap();
-	PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(0, 0, 0), vector3df(0, 0, 0)));
+	auto selector = MapCreator::createMap();
+	PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp",
+								   vector3df(200, 200, 200), vector3df(0, 0, 0), selector));
+
 
 	while(ecs.device->run()) {
 		long time = ecs::Time::get(TimeUnit::MicroSeconds);

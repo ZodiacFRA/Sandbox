@@ -8,8 +8,13 @@
 
 struct Speed {
 	Speed() = default;
-	Speed(float speed) {
+	Speed(float x, float y, float z) {
+		this->speed.X = x;
+		this->speed.Y = y;
+		this->speed.Z = z;
+	}
+	Speed(vector3df speed) {
 		this->speed = speed;
 	}
-	float speed;
+	vector3df speed;
 };

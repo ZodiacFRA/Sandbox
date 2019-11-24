@@ -18,6 +18,10 @@ struct SceneNode {
 			this->node->setMaterialTexture( 0, ecs::DataBank<std::string, ITexture*>::get()[texturePath]);
 			this->node->setPosition(position);
 			this->node->setRotation(rotation);
+
+			auto selector = Ecs::get().smgr->createTriangleSelector(node);
+			node->setTriangleSelector(selector);
+			selector->drop();
 		}
 	}
 

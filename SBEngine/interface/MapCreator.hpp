@@ -6,5 +6,5 @@
 
 class MapCreator {
 public:
-	static void createMap();
+	static ITriangleSelector * createMap();
 };
