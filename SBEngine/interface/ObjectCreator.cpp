@@ -5,6 +5,7 @@
 #include "ObjectCreator.hpp"
 #include <Entity.hpp>
 #include <SceneNode.hpp>
+#include <component/controllers/Light.hpp>
 
 ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, vector3df position, vector3df rotation,
 			       ITriangleSelector *mapSelector) {
@@ -30,4 +31,17 @@ ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, ve
 ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, std::vector<float> position, std::vector<float> rotation, ITriangleSelector *mapSelector) {
 	return createObject(meshPath, texturePath, vector3df(position[0], position[1], position[2]),
 			    vector3df(rotation[0], rotation[1], rotation[2]), nullptr);
+}
+
+ID ObjectCreator::createLight(ISceneNode *parent, const vector3df &position, video::SColorf color, f32 radius) {
+	auto &ecs = Ecs::get();
+	auto id = ecs::Entity::getId();
+
+	ecs.addComponent<Light>(id, parent, position, color, radius);
+
+	return id;
+}
+
+ID ObjectCreator::createLight(const vector3df &position, video::SColorf color, f32 radius) {
+	return createLight(nullptr, position, color, radius);
 }

@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.13)
 project(Sandbox)
+project(TCPTest)
 
 set(CMAKE_CXX_STANDARD 17)
+find_package(Threads)
+find_package(Boost 1.67.0 REQUIRED COMPONENTS filesystem system)
 
 include_directories(SBEngine)
 include_directories(SBEngine/ecs)
@@ -11,6 +14,8 @@ include_directories(SBEngine/Workers)
 include_directories(game)
 include_directories(lib/irrlicht/includes/irrlicht)
 include_directories(lib/irrKlang/includes/irrKlang)
+
+include_directories(${Boost_INCLUDE_DIR})
 
 add_executable(Sandbox
         SBEngine/ecs/ComponentBase.hpp
@@ -53,12 +58,42 @@ add_executable(Sandbox
         SBEngine/interface/MapCreator.hpp
 
         Main.cpp
-        SBEngine/network/TCPServer.cpp SBEngine/network/TCPServer.hpp SBEngine/network/TCPConnection.cpp SBEngine/network/TCPConnection.hpp)
+        SBEngine/network/server/TCPServer.cpp
+        SBEngine/network/server/TCPServer.hpp
+        SBEngine/network/server/TCPConnection.cpp
+        SBEngine/network/server/TCPConnection.hpp
+        SBEngine/network/server/UDPServer.cpp
+        SBEngine/network/server/UDPServer.hpp SBEngine/network/server/UDPConnecion.cpp SBEngine/network/server/UDPConnecion.hpp SBEngine/component/controllers/Light.hpp)
+
+add_executable(TCPTest
+        SBEngine/network/server/TCPServer.cpp
+        SBEngine/network/server/TCPServer.hpp
+        SBEngine/network/server/TCPConnection.cpp
+        SBEngine/network/server/TCPConnection.hpp
+        SBEngine/network/server/UDPServer.cpp
+        SBEngine/network/server/UDPServer.hpp
+
+        SBEngine/test/MainTest.cpp
+        SBEngine/network/server/UDPConnecion.cpp SBEngine/network/server/UDPConnecion.hpp)
 
 if (WIN32)
     target_link_libraries(Sandbox ${CMAKE_CURRENT_LIST_DIR}/lib/irrlicht/Irrlicht.dll)
     target_link_libraries(Sandbox ${CMAKE_CURRENT_LIST_DIR}/lib/irrKlang/IrrKlang.dll)
+    target_link_libraries(Sandbox ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(Sandbox ${Boost_LIBRARIES})
+
+    target_link_libraries(TCPTest ${CMAKE_CURRENT_LIST_DIR}/lib/irrlicht/Irrlicht.dll)
+    target_link_libraries(TCPTest ${CMAKE_CURRENT_LIST_DIR}/lib/irrKlang/IrrKlang.dll)
+    target_link_libraries(TCPTest ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(TCPTest ${Boost_LIBRARIES})
 else()
     target_link_libraries(Sandbox ${CMAKE_CURRENT_LIST_DIR}/lib/irrlicht/libIrrlicht.so)
     target_link_libraries(Sandbox ${CMAKE_CURRENT_LIST_DIR}/lib/irrKlang/libIrrKlang.so)
+    target_link_libraries(Sandbox ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(Sandbox ${Boost_LIBRARIES})
+
+    target_link_libraries(TCPTest ${CMAKE_CURRENT_LIST_DIR}/lib/irrlicht/libIrrlicht.so)
+    target_link_libraries(TCPTest ${CMAKE_CURRENT_LIST_DIR}/lib/irrKlang/libIrrKlang.so)
+    target_link_libraries(TCPTest ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(TCPTest ${Boost_LIBRARIES})
 endif()
