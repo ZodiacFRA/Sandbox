@@ -79,12 +79,12 @@ void loadLevelFromFile(std::string levelName)
 				std::cout << "No rot found for object " << tmp.name << '\n';
 				continue;
 			}
-			// printf("LOADING name: %s\ttype: %d\tpos: %f, %f, %f\trot: %f, %f, %f\tsize: %f, %f, %f\n",
-			// 	tmp.name.c_str(), tmp.type,
-			// 	tmp.pos[0], tmp.pos[1], tmp.pos[2],
-			// 	tmp.rot[0], tmp.rot[1], tmp.rot[2],
-			// 	tmp.size[0], tmp.size[1], tmp.size[2]
-			// );
+			printf("LOADING name: %s\ttex: %s\ttype: %d\tpos: %f, %f, %f\trot: %f, %f, %f\tsize: %f, %f, %f\n",
+				tmp.name.c_str(), tmp.tex_name.c_str(), tmp.type,
+				tmp.pos[0], tmp.pos[1], tmp.pos[2],
+				tmp.rot[0], tmp.rot[1], tmp.rot[2],
+				tmp.size[0], tmp.size[1], tmp.size[2]
+			);
 		} else {  // LIGHT PROPERTIES ONLY
 			try {
 				tmp.power = obj->second.get<int>("power");
@@ -102,10 +102,6 @@ void loadLevelFromFile(std::string levelName)
 				tmp.color.push_back(1.0);
 				continue;
 			}
-			// printf("LOADING name: %s\ttype: %d\tpos: %f, %f, %f\n",
-			// 	tmp.name.c_str(), tmp.type,
-			// 	tmp.pos[0], tmp.pos[1], tmp.pos[2]
-			// );
 		}
 
 		std::string tmp_mesh_path = meshesPath + tmp.mesh_name + ".obj";

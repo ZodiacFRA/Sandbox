@@ -20,6 +20,9 @@ ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, ve
 	auto id = ObjectCreator::createObject(meshPath, texturePath, position, rotation, mapSelector);
 
 	//ecs.addComponent<Online>(id);
+	float speedX = 0.3;
+	float speedY = 0.3;
+	float speedZ = 0.3;
 	ecs.addComponent<Speed>(id, 0.0, 0.0, 0.0);
 	ecs.addComponent<Online>(id);
 	ecs.addComponent<Keyboard>(id);
@@ -27,40 +30,40 @@ ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, ve
 		if (pressed)
 			ecs.device->closeDevice();
 	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Z] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Z] = std::pair<bool, std::function<void(bool)>>(false, [id, speedX, speedY, speedZ, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.Y = 10.0;
-		else if (speed[id].speed.Y == 10.0)
+			speed[id].speed.Y = speedX;
+		else if (speed[id].speed.Y == speedX)
 			speed[id].speed.Y = 0.0;
 	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Q] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_Q] = std::pair<bool, std::function<void(bool)>>(false, [id, speedX, speedY, speedZ, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.X = -10.0;
-		else if (speed[id].speed.X == -10.0)
+			speed[id].speed.X = -speedY;
+		else if (speed[id].speed.X == -speedY)
 			speed[id].speed.X = 0.0;
 	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_S] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_S] = std::pair<bool, std::function<void(bool)>>(false, [id, speedX, speedY, speedZ, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.Y = -10.0;
-		else if (speed[id].speed.Y == -10.0)
+			speed[id].speed.Y = -speedX;
+		else if (speed[id].speed.Y == -speedX)
 			speed[id].speed.Y = 0.0;
 	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_D] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+	keyboard[id].keyMap[EKEY_CODE::KEY_KEY_D] = std::pair<bool, std::function<void(bool)>>(false, [id, speedX, speedY, speedZ, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.X = 10.0;
-		else if (speed[id].speed.X == 10.0)
+			speed[id].speed.X = speedY;
+		else if (speed[id].speed.X == speedY)
 			speed[id].speed.X = 0.0;
 	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_SPACE] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+	keyboard[id].keyMap[EKEY_CODE::KEY_SPACE] = std::pair<bool, std::function<void(bool)>>(false, [id, speedX, speedY, speedZ, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.Z = 10.0;
-		else if (speed[id].speed.Z == 10.0)
+			speed[id].speed.Z = speedZ;
+		else if (speed[id].speed.Z == speedZ)
 			speed[id].speed.Z = 0.0;
 	});
-	keyboard[id].keyMap[EKEY_CODE::KEY_LCONTROL] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs, &speed](bool pressed){
+	keyboard[id].keyMap[EKEY_CODE::KEY_LCONTROL] = std::pair<bool, std::function<void(bool)>>(false, [id, speedX, speedY, speedZ, &ecs, &speed](bool pressed){
 		if (pressed)
-			speed[id].speed.Z = -10.0;
-		else if (speed[id].speed.Z == -10.0)
+			speed[id].speed.Z = -speedZ;
+		else if (speed[id].speed.Z == -speedZ)
 			speed[id].speed.Z = 0.0;
 	});
 
