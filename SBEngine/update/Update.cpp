@@ -39,7 +39,6 @@ void Update::online(TCPServer *server) {
 	for (const auto &id: ids) {
 		auto pos = node[id].node->getPosition();
 		auto rot = node[id].node->getRotation();
-		//TODO: send data through network
 		std::stringstream ss;
 		ss << "ID: " << id << std::endl;
 		ss << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;

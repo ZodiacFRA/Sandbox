@@ -17,7 +17,7 @@ ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, ve
 	auto &ecs = Ecs::get();
 	auto &keyboard = ecs.getComponentMap<Keyboard>();
 	auto &speed = ecs.getComponentMap<Speed>();
-	auto id = ObjectCreator::createObject(meshPath, texturePath, position, rotation, mapSelector);
+	auto id = ObjectCreator::createObject(meshPath, texturePath, position, rotation, mapSelector, false);
 
 	//ecs.addComponent<Online>(id);
 	float speedX = 0.3;

@@ -17,6 +17,7 @@
 #include <network/server/TCPServer.hpp>
 #include "interface/loadLevelFromFile.hpp"
 #include <boost/thread.hpp>
+#include <component/FpsCamera.hpp>
 
 using namespace irr;
 
@@ -50,9 +51,20 @@ int main() {
 		return Ecs::get().driver->getTexture(texturePath.c_str());
 	};
 
-
-
+	ID id = ecs::Entity::getId();
+	ecs.addComponent<IMetaTriangleSelector*>(id);
+	ecs.getComponentMap<IMetaTriangleSelector*>()[id] = ecs.smgr->createMetaTriangleSelector();
 	loadLevelFromFile("1");
+	ID player = ecs.getComponentMap<FpsCamera>()[ecs.filter<FpsCamera>()[0]].parent;
+	auto node = ecs.getComponentMap<SceneNode>()[player].node;
+
+	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(
+		ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge,
+		core::vector3df(0,-10,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
+	ecs.getComponentMap<IMetaTriangleSelector*>()[id]->drop(); // As soon as we're done with the mapSelector, drop it.
+	node->addAnimator(anim);
+	anim->drop();  // And likewise, drop the animator when we're done referring to it.
+
 	// auto selector = MapCreator::createMap();
 	// PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp",
 								   // vector3df(200, 200, 200), vector3df(0, 0, 0), selector));

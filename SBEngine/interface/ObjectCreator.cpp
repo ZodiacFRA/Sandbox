@@ -7,12 +7,19 @@
 #include <SceneNode.hpp>
 #include <component/controllers/Light.hpp>
 
-ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, vector3df position, vector3df rotation, ITriangleSelector *mapSelector) {
+// TODO: FIX COLLIDE
+ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, vector3df position, vector3df rotation, ITriangleSelector *mapSelector, bool collide) {
 	auto &ecs = Ecs::get();
 	auto id = ecs::Entity::getId();
 
 	ecs.addComponent<SceneNode>(id, meshPath, texturePath, position, rotation);
 	auto node = ecs.getComponentMap<SceneNode>()[id].node;
+
+	if (!collide)
+		return id;
+	scene::ITriangleSelector* sel = ecs.smgr->createTriangleSelector(node);
+	ecs.getComponentMap<IMetaTriangleSelector*>()[ecs.filter<IMetaTriangleSelector*>()[0]]->addTriangleSelector(sel);
+	sel->drop();
 
 	if (mapSelector)
 	{
@@ -27,9 +34,9 @@ ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, ve
 	return id;
 }
 
-ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, std::vector<float> position, std::vector<float> rotation, ITriangleSelector *mapSelector) {
+ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, std::vector<float> position, std::vector<float> rotation, ITriangleSelector *mapSelector, bool collide) {
 	return createObject(meshPath, texturePath, vector3df(position[0], position[1], position[2]),
-			    vector3df(rotation[0], rotation[1], rotation[2]), nullptr);
+			    vector3df(rotation[0], rotation[1], rotation[2]), nullptr, collide);
 }
 
 ID ObjectCreator::createLight(ISceneNode *parent, const vector3df &position, video::SColorf color, f32 radius) {

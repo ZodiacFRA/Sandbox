@@ -87,8 +87,7 @@ private:
 		if (!ec) {
 			std::string line(input_buffer_.substr(0, n - 1));
 			input_buffer_.erase(0, n);
-			if (!line.empty())
-			{
+			if (!line.empty()) {
 				std::cout << "Received:\n" << line << "\n\n";
 			}
 			start_read();

@@ -106,7 +106,7 @@ void loadLevelFromFile(std::string levelName)
 
 		std::string tmp_mesh_path = meshesPath + tmp.mesh_name + ".obj";
 		if (tmp.type == object_type::MESH)
-			ObjectCreator::createObject(tmp_mesh_path, tmp.tex_name, tmp.pos, tmp.rot, nullptr);
+			ObjectCreator::createObject(tmp_mesh_path, tmp.tex_name, tmp.pos, tmp.rot, nullptr, true);
 		else if (tmp.type == object_type::PLAYER) {
 			std::cout << "Created player" << '\n';
 			PlayerCreator::createFpsCamera(PlayerCreator::createPlayer(tmp_mesh_path, tmp.tex_name, tmp.pos, tmp.rot, nullptr));
