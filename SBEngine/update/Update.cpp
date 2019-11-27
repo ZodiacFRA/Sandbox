@@ -43,7 +43,7 @@ void Update::online(TCPServer *server) {
 		std::stringstream ss;
 		ss << "ID: " << id << std::endl;
 		ss << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
-		ss << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
+		ss << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << '\0';
 		std::string out = ss.str();
 		for (auto mec: server->connected) {
 			if (mec->toRemove)
@@ -90,11 +90,12 @@ void Update::fpsCamera() {
 
 	for(const auto &id : ids) {
 		const auto rot = cam[id].camera->getRotation();
+		const auto camPos = cam[id].camera->getPosition();
 		const auto pos = node[cam[id].parent].node->getPosition();
 		auto target = vector3df(cos(rot.Y) * 100, 0, sin(rot.Y) * 100) -
 			      vector3df(0, tan(rot.X) * 100, 0);
 		cam[id].camera->setTarget(pos + target);
-		cam[id].camera->setPosition(vector3df(cos(rot.Y) * 3, 31, sin(rot.Y) * 3));;
+//		cam[id].camera->setPosition(vector3df(cos(rot.Y) * 3, camPos.Y, sin(rot.Y) * 3));;
 		node[cam[id].parent].node->setRotation(vector3df(0, -atan2(target.Z, target.X) * 180 / PI, 0));
 	}
 }

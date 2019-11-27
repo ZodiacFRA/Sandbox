@@ -81,7 +81,10 @@ ID PlayerCreator::createFpsCamera(ID player) {
 	auto &mouse = ecs.getComponentMap<Mouse>();
 	auto parent = ecs.getComponentMap<SceneNode>()[player].node;
 
-	ecs.addComponent<FpsCamera>(id, player, parent->getPosition() + vector3df(0, 31, 0));
+	auto box = parent->getBoundingBox().MaxEdge;
+
+
+	ecs.addComponent<FpsCamera>(id, player, vector3df(box.X / 2.0, box.Y + 1, box.Z / 2.0));
 	ecs.addComponent<Mouse>(id);
 	mouse[id].onMove = [id, &ecs, parent](int x, int y){
 		if (x != 640/2 || y != 480/2) {
