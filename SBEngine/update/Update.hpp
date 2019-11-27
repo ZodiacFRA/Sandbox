@@ -5,6 +5,7 @@
 #pragma once
 
 #include <Ecs.hpp>
+#include <network/server/TCPServer.hpp>
 
 #include "Speed.hpp"
 #include "SceneNode.hpp"
@@ -12,13 +13,10 @@
 
 class Update {
 public:
-	Update();
+	Update(TCPServer *server);
 
-	static void online();
+	static void online(TCPServer *server);
 	static void speed();
 	static void fpsCamera();
 	static void keyboard();
-
-public:
-	KeyboardEvent keyboardEvent;
 };

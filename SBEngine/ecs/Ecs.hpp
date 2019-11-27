@@ -17,6 +17,7 @@
 
 ///include Graphical
 #include <irrlicht.h>
+
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -163,5 +164,5 @@ public:
 	IGUIEnvironment*	guienv;
 
 public:
-	KeyboardEvent	keyboardEvent;
+	KeyboardEvent	*keyboardEvent;
 };

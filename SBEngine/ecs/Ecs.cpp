@@ -5,8 +5,10 @@
 #include "Ecs.hpp"
 
 Ecs::Ecs() {
+	this->keyboardEvent	= new KeyboardEvent();
+
 	this->device = createDevice( video::EDT_OPENGL, dimension2d<u32>(640, 480), 16,
-			      false, false, false, &keyboardEvent);
+			      false, false, false, keyboardEvent);
 
 	device->setWindowCaption(L"Sandbox");
 	this->driver = device->getVideoDriver();

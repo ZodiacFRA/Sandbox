@@ -6,7 +6,7 @@
 #include <controllers/Keyboard.hpp>
 #include "Update.hpp"
 
-Update::Update()  {
+Update::Update(TCPServer *server)  {
 	auto &ecs = Ecs::get();
 
 	/// Update Speed
@@ -25,23 +25,42 @@ Update::Update()  {
 		ecs.guienv->drawAll();
 		ecs.driver->endScene();
 	});
-	ecs.addUpdate(101, [](){
-		Update::online();
+	ecs.addUpdate(101, [server](){
+		Update::online(server);
 	});
 }
 
-void Update::online() {
+void Update::online(TCPServer *server) {
 	auto &ecs = Ecs::get();
 	auto &node = ecs.getComponentMap<SceneNode>();
 	auto ids = ecs.filter<Online, SceneNode>();
+	bool doClean = false;
 
 	for (const auto &id: ids) {
 		auto pos = node[id].node->getPosition();
 		auto rot = node[id].node->getRotation();
 		//TODO: send data through network
-//		std::cout << "ID: " << id << std::endl;
-//		std::cout << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
-//		std::cout << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
+		std::stringstream ss;
+		ss << "ID: " << id << std::endl;
+		ss << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
+		ss << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
+		std::string out = ss.str();
+		for (auto mec: server->connected) {
+			if (mec->toRemove)
+				doClean = true;
+			else
+				mec->sendData(out.c_str(), out.size());
+		}
+		if (doClean) {
+			doClean = false;
+			auto it = server->connected.begin();
+			for (; it != server->connected.end() && server->connected.size() != 0; ++it) {
+				if ((*it)->toRemove) {
+					server->connected.remove(*it);
+					break;
+				}
+			}
+		}
 	}
 }
 

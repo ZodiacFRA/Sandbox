@@ -14,7 +14,9 @@
 #include <DataBank.hpp>
 #include <interface/PlayerCreator.hpp>
 #include <interface/MapCreator.hpp>
+#include <network/server/TCPServer.hpp>
 #include "interface/loadLevelFromFile.hpp"
+#include <boost/thread.hpp>
 
 using namespace irr;
 
@@ -25,9 +27,14 @@ using namespace io;
 using namespace gui;
 
 int main() {
-	auto update = Update();
+	boost::asio::io_service io_service;
+	TCPServer *server = new TCPServer(io_service, 4242);
+	std::thread t([&io_service](){io_service.run();});
+	t.detach();
+
 	auto &ecs = Ecs::get();
-	ecs.keyboardEvent.initialised = true;
+	auto update = Update(server);
+	ecs.keyboardEvent->initialised = true;
 	ecs.device->getCursorControl()->setVisible(false);
 
 	ecs::DataBank<std::string, IAnimatedMesh*>::get().creator = [](std::string meshPath){
@@ -43,19 +50,21 @@ int main() {
 		return Ecs::get().driver->getTexture(texturePath.c_str());
 	};
 
+
+
 	loadLevelFromFile("1");
 	// auto selector = MapCreator::createMap();
 	// PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp",
 								   // vector3df(200, 200, 200), vector3df(0, 0, 0), selector));
-
-	ecs.smgr->addLightSceneNode();
 	while(ecs.device->run()) {
 		long time = ecs::Time::get(TimeUnit::MicroSeconds);
 		ecs.update();
 
 		auto x = static_cast<unsigned int>(16666 - (ecs::Time::get(TimeUnit::MicroSeconds) - time) > 0 ? 16666 - (ecs::Time::get(TimeUnit::MicroSeconds) - time) : 0);
+		std::cout << "Cpu usage: " << (double)(16666 - x) / 16666.0 * 100.0 << '\r' << std::flush;
 		std::this_thread::sleep_for(std::chrono::microseconds(x));
 	}
+
 
 	ecs.device->drop();
 	return 0;

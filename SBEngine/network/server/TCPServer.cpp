@@ -11,7 +11,7 @@ TCPServer::TCPServer(boost::asio::io_context &io_context, short port): ioContext
 }
 
 void TCPServer::startAccept() {
-	TCPConnection::pointer new_connection = TCPConnection::create(ioContext);
+	TCPConnection::pointer new_connection(new TCPConnection(ioContext));
 
 	acceptor.async_accept(new_connection->tcpSocket,
 			      boost::bind(&TCPServer::handleAccept, this, new_connection,
@@ -21,6 +21,7 @@ void TCPServer::startAccept() {
 void TCPServer::handleAccept(TCPConnection::pointer newConnection, const boost::system::error_code &error) {
 	if (!error) {
 		newConnection->start();
+		connected.push_back(newConnection);
 	}
 	startAccept();
 }

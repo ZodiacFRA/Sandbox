@@ -21,6 +21,7 @@ ID PlayerCreator::createPlayer(std::string meshPath, std::string texturePath, ve
 
 	//ecs.addComponent<Online>(id);
 	ecs.addComponent<Speed>(id, 0.0, 0.0, 0.0);
+	ecs.addComponent<Online>(id);
 	ecs.addComponent<Keyboard>(id);
 	keyboard[id].keyMap[EKEY_CODE::KEY_ESCAPE] = std::pair<bool, std::function<void(bool)>>(false, [id, &ecs](bool pressed){
 		if (pressed)

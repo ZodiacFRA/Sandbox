@@ -12,24 +12,25 @@
 
 using boost::asio::ip::tcp;
 
-class TCPConnection : public boost::enable_shared_from_this<TCPConnection> {
+class TCPConnection {// : public boost::enable_shared_from_this<TCPConnection> {
 private:
-	TCPConnection(boost::asio::io_context& io_context);
-
 public:
-	static boost::shared_ptr<TCPConnection> create(boost::asio::io_context& io_context);
+
+	TCPConnection(boost::asio::io_context& io_context);
+	static std::shared_ptr<TCPConnection> create(boost::asio::io_context& io_context);
 	void start();
 	void handleRead(const boost::system::error_code& error, size_t bytes_transferred);
 	void handleWrite(const boost::system::error_code& error);
 
+	void sendData(const char *dat, size_t size);
 
 public:
-
+	bool toRemove;
 	tcp::socket tcpSocket;
 
 	enum { max_length = 1024 };
 	char data[max_length];
 
 
-	typedef boost::shared_ptr<TCPConnection> pointer;
+	typedef std::shared_ptr<TCPConnection> pointer;
 };
