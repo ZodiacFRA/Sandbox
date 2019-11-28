@@ -4,7 +4,7 @@ project(TCPTest)
 
 set(CMAKE_CXX_STANDARD 17)
 find_package(Threads)
-find_package(Boost 1.66.0 REQUIRED COMPONENTS filesystem system)
+find_package(Boost 1.65.0 REQUIRED COMPONENTS filesystem system)
 
 include_directories(SBEngine)
 include_directories(SBEngine/ecs)
@@ -64,7 +64,7 @@ add_executable(Sandbox
         SBEngine/network/server/TCPConnection.hpp
         SBEngine/network/server/UDPServer.cpp
         SBEngine/network/server/UDPServer.hpp SBEngine/component/controllers/Light.hpp SBEngine/network/client/TCPClient.cpp SBEngine/network/client/TCPClient.hpp)
-target_compile_definitions(Sandbox PRIVATE CLIENT_SOLO)
+target_compile_definitions(Sandbox PRIVATE SERVER)
 
 add_executable(TCPTest
         SBEngine/network/server/TCPServer.cpp
