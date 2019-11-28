@@ -9,6 +9,7 @@
 #include <boost/asio/steady_timer.hpp>
 #include <boost/asio.hpp>
 #include <string>
+#include <queue>
 #include <iostream>
 
 using boost::asio::ip::tcp;
@@ -88,7 +89,9 @@ private:
 			std::string line(input_buffer_.substr(0, n - 1));
 			input_buffer_.erase(0, n);
 			if (!line.empty()) {
-				std::cout << "Received:\n" << line << "\n\n";
+				mutex.lock();
+				pendingUpdates.push(line);
+				mutex.unlock();
 			}
 			start_read();
 		} else {
@@ -129,6 +132,9 @@ private:
 		deadline_.async_wait(boost::bind(&TCPClient::check_deadline, this));
 	}
 
+public:
+	std::mutex mutex;
+	std::queue<std::string> pendingUpdates;
 private:
 	bool stopped_;
 	tcp::resolver::results_type endpoints_;

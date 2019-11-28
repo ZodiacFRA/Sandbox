@@ -18,6 +18,7 @@
 #include "interface/loadLevelFromFile.hpp"
 #include <boost/thread.hpp>
 #include <component/FpsCamera.hpp>
+#include <network/client/TCPClient.hpp>
 
 using namespace irr;
 
@@ -28,13 +29,27 @@ using namespace io;
 using namespace gui;
 
 int main() {
+	auto &ecs = Ecs::get();
+
+	void *network = nullptr;
+#ifdef	SERVER
 	boost::asio::io_service io_service;
 	TCPServer *server = new TCPServer(io_service, 4242);
 	std::thread t([&io_service](){io_service.run();});
 	t.detach();
+	network = (void*)server;
+#elif	CLIENT_MULTI
+	boost::asio::io_context io_context;
+	tcp::resolver r(io_context);
+	TCPClient *client = new TCPClient(io_context);
 
-	auto &ecs = Ecs::get();
-	auto update = Update(server);
+	client->start(r.resolve("localhost", "4242"));
+
+	std::thread t([&io_context](){io_context.run();});
+	t.detach();
+	network = (void*)client;
+#endif
+	auto update = Update(network);
 	ecs.keyboardEvent->initialised = true;
 	ecs.device->getCursorControl()->setVisible(false);
 
@@ -54,16 +69,17 @@ int main() {
 	ID id = ecs::Entity::getId();
 	ecs.addComponent<IMetaTriangleSelector*>(id);
 	ecs.getComponentMap<IMetaTriangleSelector*>()[id] = ecs.smgr->createMetaTriangleSelector();
+
+#ifdef	CLIENT_SOLO
 	loadLevelFromFile("1");
+#endif
+
 	ID player = ecs.getComponentMap<FpsCamera>()[ecs.filter<FpsCamera>()[0]].parent;
 	auto node = ecs.getComponentMap<SceneNode>()[player].node;
-
-	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(
-		ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge,
-		core::vector3df(0,-10,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
-	ecs.getComponentMap<IMetaTriangleSelector*>()[id]->drop(); // As soon as we're done with the mapSelector, drop it.
+	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge, core::vector3df(0,-10,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
+	ecs.getComponentMap<IMetaTriangleSelector*>()[id]->drop();
 	node->addAnimator(anim);
-	anim->drop();  // And likewise, drop the animator when we're done referring to it.
+	anim->drop();
 
 	// auto selector = MapCreator::createMap();
 	// PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp",

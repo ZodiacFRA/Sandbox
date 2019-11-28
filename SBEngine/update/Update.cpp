@@ -4,9 +4,10 @@
 
 #include <FpsCamera.hpp>
 #include <controllers/Keyboard.hpp>
+#include <network/client/TCPClient.hpp>
 #include "Update.hpp"
 
-Update::Update(TCPServer *server)  {
+Update::Update(void *network)  {
 	auto &ecs = Ecs::get();
 
 	/// Update Speed
@@ -25,9 +26,23 @@ Update::Update(TCPServer *server)  {
 		ecs.guienv->drawAll();
 		ecs.driver->endScene();
 	});
+#ifdef	SERVER
+	auto server = (TCPServer*)network;
 	ecs.addUpdate(101, [server](){
 		Update::online(server);
 	});
+#endif
+#ifdef	CLIENT_MULTI
+	auto client = (TCPClient*)network;
+	ecs.addUpdate(101, [client](){
+		client->mutex.lock();
+		while (client->pendingUpdates.size() != 0) {
+			std::cout << client->pendingUpdates.front() << std::endl;
+			client->pendingUpdates.pop();
+		}
+		client->mutex.unlock();
+	});
+#endif
 }
 
 void Update::online(TCPServer *server) {

@@ -13,7 +13,7 @@
 
 class Update {
 public:
-	Update(TCPServer *server);
+	Update(void *server);
 
 	static void online(TCPServer *server);
 	static void speed();
