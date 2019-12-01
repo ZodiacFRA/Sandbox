@@ -70,7 +70,7 @@ int main() {
 	ID id = ecs::Entity::getId();
 	ecs.addComponent<IMetaTriangleSelector*>(id);
 	ecs.getComponentMap<IMetaTriangleSelector*>()[id] = ecs.smgr->createMetaTriangleSelector();
-	loadLevelFromFile("1");
+	loadLevelFromFile("stress_test");
 	ID player = ecs.getComponentMap<FpsCamera>()[ecs.filter<FpsCamera>()[0]].parent;
 	auto node = ecs.getComponentMap<SceneNode>()[player].node;
 	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge, core::vector3df(0,-10,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
