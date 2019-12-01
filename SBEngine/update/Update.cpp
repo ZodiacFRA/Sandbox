@@ -38,6 +38,14 @@ Update::Update(void *network)  {
 		client->mutex.lock();
 		auto &node = Ecs::get().getComponentMap<SceneNode>();
 		while (client->pendingUpdates.size() != 0) {
+			std::istringstream ss(client->pendingUpdates.front());
+			ID id;
+			float x, y, z;
+			ss >> id;
+			ss >> x >> y >> z;
+			node[id].node->setPosition(vector3df(x, y, z));
+			ss >> x >> y >> z;
+			node[id].node->setRotation(vector3df(x, y, z));
 			//TODO: string -> array of string -> ID + position + rotation
 			std::cout << client->pendingUpdates.front() << std::endl;
 			client->pendingUpdates.pop();

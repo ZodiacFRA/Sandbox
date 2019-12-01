@@ -32,6 +32,7 @@ int main() {
 	auto &ecs = Ecs::get();
 
 	void *network = nullptr;
+	//TODO: use arguments to setup CLIENT, CLIENT_SOLO, CLIENT_MULTI
 #ifdef	SERVER
 	boost::asio::io_service io_service;
 	TCPServer *server = new TCPServer(io_service, 4242);
@@ -73,7 +74,7 @@ int main() {
 	loadLevelFromFile("stress_test");
 	ID player = ecs.getComponentMap<FpsCamera>()[ecs.filter<FpsCamera>()[0]].parent;
 	auto node = ecs.getComponentMap<SceneNode>()[player].node;
-	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge, core::vector3df(0,-10,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
+	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge, core::vector3df(0,0,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
 	ecs.getComponentMap<IMetaTriangleSelector*>()[id]->drop();
 	node->addAnimator(anim);
 	anim->drop();
