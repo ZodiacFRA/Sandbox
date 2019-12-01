@@ -43,7 +43,7 @@ int main() {
 	tcp::resolver r(io_context);
 	TCPClient *client = new TCPClient(io_context);
 
-	client->start(r.resolve("localhost", "4242"));
+	client->start(r.resolve("51.159.36.136", "4242"));
 
 	std::thread t([&io_context](){io_context.run();});
 	t.detach();
@@ -71,6 +71,18 @@ int main() {
 	ecs.addComponent<IMetaTriangleSelector*>(id);
 	ecs.getComponentMap<IMetaTriangleSelector*>()[id] = ecs.smgr->createMetaTriangleSelector();
 	loadLevelFromFile("1");
+	ID player = ecs.getComponentMap<FpsCamera>()[ecs.filter<FpsCamera>()[0]].parent;
+	auto node = ecs.getComponentMap<SceneNode>()[player].node;
+	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge, core::vector3df(0,-10,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
+	ecs.getComponentMap<IMetaTriangleSelector*>()[id]->drop();
+	node->addAnimator(anim);
+	anim->drop();
+#endif
+#ifdef 	CLIENT_MULTI
+	ID id = ecs::Entity::getId();
+	ecs.addComponent<IMetaTriangleSelector*>(id);
+	ecs.getComponentMap<IMetaTriangleSelector*>()[id] = ecs.smgr->createMetaTriangleSelector();
+	loadLevelFromFile("stress_test");
 	ID player = ecs.getComponentMap<FpsCamera>()[ecs.filter<FpsCamera>()[0]].parent;
 	auto node = ecs.getComponentMap<SceneNode>()[player].node;
 	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge, core::vector3df(0,-10,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));

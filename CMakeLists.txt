@@ -63,8 +63,11 @@ add_executable(Sandbox
         SBEngine/network/server/TCPConnection.cpp
         SBEngine/network/server/TCPConnection.hpp
         SBEngine/network/server/UDPServer.cpp
-        SBEngine/network/server/UDPServer.hpp SBEngine/component/controllers/Light.hpp SBEngine/network/client/TCPClient.cpp SBEngine/network/client/TCPClient.hpp)
-target_compile_definitions(Sandbox PRIVATE SERVER)
+        SBEngine/network/server/UDPServer.hpp
+        SBEngine/component/controllers/Light.hpp
+        SBEngine/network/client/TCPClient.cpp
+        SBEngine/network/client/TCPClient.hpp)
+target_compile_definitions(Sandbox PRIVATE CLIENT_MULTI)
 
 add_executable(TCPTest
         SBEngine/network/server/TCPServer.cpp

@@ -36,7 +36,9 @@ Update::Update(void *network)  {
 	auto client = (TCPClient*)network;
 	ecs.addUpdate(101, [client](){
 		client->mutex.lock();
+		auto &node = Ecs::get().getComponentMap<SceneNode>();
 		while (client->pendingUpdates.size() != 0) {
+			//TODO: string -> array of string -> ID + position + rotation
 			std::cout << client->pendingUpdates.front() << std::endl;
 			client->pendingUpdates.pop();
 		}
@@ -55,9 +57,12 @@ void Update::online(TCPServer *server) {
 		auto pos = node[id].node->getPosition();
 		auto rot = node[id].node->getRotation();
 		std::stringstream ss;
-		ss << "ID: " << id << std::endl;
+		/*ss << "ID: " << id << std::endl;
 		ss << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
-		ss << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << '\0';
+		ss << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << '\0';*/
+		ss << id << std::endl;
+		ss << pos.X << "\n" << pos.Y << "\n" << pos.Z << std::endl;
+		ss << rot.X << "\n" << rot.Y << "\n" << rot.Z << '\0';
 		std::string out = ss.str();
 		for (auto mec: server->connected) {
 			if (mec->toRemove)
