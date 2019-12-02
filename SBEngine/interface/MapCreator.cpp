@@ -8,8 +8,8 @@
 ITriangleSelector * MapCreator::createMap() {
 	auto &ecs = Ecs::get();
 
-	ecs.device->getFileSystem()->addFileArchive("./assets/map-20kdm2.pk3");
-	IAnimatedMesh* mesh = ecs.smgr->getMesh("20kdm2.bsp");
+	ecs.device->getFileSystem()->addFileArchive("./assets/maps/test/test.pk3");
+	IAnimatedMesh* mesh = ecs.smgr->getMesh("./assets/maps/test/test.bsp");
 	ISceneNode* node = nullptr;
 	ITriangleSelector *selector = nullptr;
 	if (mesh) {

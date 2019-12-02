@@ -83,7 +83,11 @@ int main() {
 	ID id = ecs::Entity::getId();
 	ecs.addComponent<IMetaTriangleSelector*>(id);
 	ecs.getComponentMap<IMetaTriangleSelector*>()[id] = ecs.smgr->createMetaTriangleSelector();
-	loadLevelFromFile("stress_test");
+	// loadLevelFromFile("stress_test");
+
+	auto selector = MapCreator::createMap();
+	PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(200, 200, 200), vector3df(0, 0, 0), selector));
+
 	ID player = ecs.getComponentMap<FpsCamera>()[ecs.filter<FpsCamera>()[0]].parent;
 	auto node = ecs.getComponentMap<SceneNode>()[player].node;
 	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge, core::vector3df(0,0,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
@@ -93,9 +97,6 @@ int main() {
 #endif
 
 
-	// auto selector = MapCreator::createMap();
-	// PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp",
-								   // vector3df(200, 200, 200), vector3df(0, 0, 0), selector));
 	while(ecs.device->run()) {
 		long time = ecs::Time::get(TimeUnit::MicroSeconds);
 		ecs.update();
