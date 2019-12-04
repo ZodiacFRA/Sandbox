@@ -42,12 +42,13 @@ Update::Update(void *network)  {
 			ID id;
 			float x, y, z;
 			ss >> id;
+			std::cout << id << std::endl;
 			ss >> x >> y >> z;
+			std::cout << x << " " << y << " " << z << std::endl;
 			node[id].node->setPosition(vector3df(x, y, z));
 			ss >> x >> y >> z;
+			std::cout << x << " " << y << " " << z << std::endl;
 			node[id].node->setRotation(vector3df(x, y, z));
-			//TODO: string -> array of string -> ID + position + rotation
-			std::cout << client->pendingUpdates.front() << std::endl;
 			client->pendingUpdates.pop();
 		}
 		client->mutex.unlock();
