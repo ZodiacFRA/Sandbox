@@ -31,6 +31,8 @@ ID ObjectCreator::createObject(std::string meshPath, std::string texturePath, ve
 		anim->drop();  // And likewise, drop the animator when we're done referring to it.
 	}
 
+	node->addShadowVolumeSceneNode();
+
 	return id;
 }
 

@@ -10,8 +10,8 @@
 struct SceneNode {
 	SceneNode() = default;
 	SceneNode(std::string meshPath, std::string texturePath, vector3df position, vector3df rotation) {
-
 		this->node = Ecs::get().smgr->addAnimatedMeshSceneNode(ecs::DataBank<std::string, IAnimatedMesh*>::get()[meshPath]);
+
 		if (this->node) {
 			this->node->setMaterialFlag(EMF_LIGHTING, false);
 			this->node->setMD2Animation(scene::EMAT_STAND);
