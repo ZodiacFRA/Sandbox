@@ -35,7 +35,10 @@ int main() {
 	//TODO: use arguments to setup CLIENT, CLIENT_SOLO, CLIENT_MULTI
 #ifdef	SERVER
 	boost::asio::io_service io_service;
-	TCPServer *server = new TCPServer(io_service, 4242);
+	auto *server = new TCPServer(io_service, 4242);
+	server->onConnection = [server](TCPConnection::pointer &conn){
+		std::cout << std::endl << "Bonjour au nouvel arrivant" << std::endl << std::endl;
+	};
 	std::thread t([&io_service](){io_service.run();});
 	t.detach();
 	network = (void*)server;

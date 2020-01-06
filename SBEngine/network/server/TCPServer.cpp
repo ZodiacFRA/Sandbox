@@ -22,6 +22,8 @@ void TCPServer::handleAccept(TCPConnection::pointer newConnection, const boost::
 	if (!error) {
 		newConnection->start();
 		connected.push_back(newConnection);
+		if (onConnection)
+			onConnection(newConnection);
 	}
 	startAccept();
 }

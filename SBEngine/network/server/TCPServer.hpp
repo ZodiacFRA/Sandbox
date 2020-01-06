@@ -28,5 +28,6 @@ private:
 	tcp::acceptor acceptor;
 
 public:
-	std::list<TCPConnection::pointer> connected;
+	std::function<void(TCPConnection::pointer&)>	onConnection;
+	std::list<TCPConnection::pointer>		connected;
 };
