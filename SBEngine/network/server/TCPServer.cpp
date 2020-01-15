@@ -13,7 +13,6 @@ TCPServer::TCPServer(boost::asio::io_context &io_context, short port): ioContext
 
 void TCPServer::startAccept() {
 	TCPConnection::pointer new_connection(new TCPConnection(ioContext));
-	std::cout << std::endl << acceptor.is_open() << std::endl;
 	acceptor.async_accept(new_connection->tcpSocket,
 			      boost::bind(&TCPServer::handleAccept, this, new_connection,
 					  boost::asio::placeholders::error));
@@ -23,11 +22,8 @@ void TCPServer::handleAccept(TCPConnection::pointer newConnection, const boost::
 	if (!error) {
 		newConnection->start();
 		connected.push_back(newConnection);
-		std::cout << "WTF LANCE TOI" << std::endl;
 		if (onConnection)
 			onConnection(newConnection);
-	} else {
-		std::cout << "c est la merde" << std::endl;
 	}
 	startAccept();
 }

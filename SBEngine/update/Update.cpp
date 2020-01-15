@@ -29,7 +29,28 @@ Update::Update(void *network)  {
 	});
 #ifdef	SERVER
 	auto server = (TCPServer*)network;
-	ecs.addUpdate(101, [server](){
+	ecs.addUpdate(101, [&ecs, server](){
+		auto nodes = ecs.getComponentMap<SceneNode>();
+		for (auto &tcpSock: server->connected) {
+			tcpSock->updatesMutex.lock();
+			for (auto &elem : tcpSock->updates) {
+				std::istringstream ss(elem);
+				ID id;
+				ss >> id;
+
+				vector3df rot;
+				ss >> rot.X >> rot.Y >> rot.Z;
+				nodes[id].node->setRotation(rot);
+
+				std::string keys;
+				ss >> keys;
+				std::cout << "LOOK AT ME: " << keys << std::endl << std::endl;
+			}
+			tcpSock->updates.clear();
+			tcpSock->updatesMutex.unlock();
+		}
+	});
+	ecs.addUpdate(102, [server](){
 		Update::online(server);
 	});
 #endif
@@ -46,30 +67,32 @@ Update::Update(void *network)  {
 				pressedKeys += elem.first;
 
 		std::ostringstream out;
-		out << player;
-		out << rotation.X << rotation.Y << rotation.Z;
-		out << pressedKeys;
+		out << player << '\n';
+		out << rotation.X << '\n' << rotation.Y << '\n' << rotation.Z << '\n';
+		out << pressedKeys << '\n';
 
 		auto oui = out.str();
 		if (client->socket()->is_open())
 			client->socket()->send(boost::asio::buffer(oui));
 	});
-	ecs.addUpdate(112, [client](){
+	ecs.addUpdate(112, [&ecs, client](){
 		client->mutex.lock();
-		auto &node = Ecs::get().getComponentMap<SceneNode>();
+		auto &node = ecs.getComponentMap<SceneNode>();
+		ID player = ecs.filter<Keyboard>()[0];
 		while (client->pendingUpdates.size() != 0) {
 			std::istringstream ss(client->pendingUpdates.front());
+			client->pendingUpdates.pop();
 			ID id;
 			float x, y, z;
 			ss >> id;
-			std::cout << id << std::endl;
+
 			ss >> x >> y >> z;
-			std::cout << x << " " << y << " " << z << std::endl;
 			node[id].node->setPosition(vector3df(x, y, z));
-			ss >> x >> y >> z;
-			std::cout << x << " " << y << " " << z << std::endl;
-			node[id].node->setRotation(vector3df(x, y, z));
-			client->pendingUpdates.pop();
+
+			if(id != player) {
+				ss >> x >> y >> z;
+				node[id].node->setRotation(vector3df(x, y, z));
+			}
 		}
 		client->mutex.unlock();
 	});

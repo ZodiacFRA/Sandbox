@@ -28,6 +28,9 @@ void TCPConnection::handleRead(const boost::system::error_code& error, size_t by
 	if (!error) {
 		std::istringstream in(data);
 		std::cout << in.str() << std::endl << std::endl;
+		updatesMutex.lock();
+		updates.push_back(in.str());
+		updatesMutex.unlock();
 		start();
 		return;
 		boost::asio::async_write(tcpSocket,

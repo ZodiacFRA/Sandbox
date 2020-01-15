@@ -4,6 +4,8 @@
 
 #pragma  once
 
+#include <list>
+
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
@@ -31,6 +33,8 @@ public:
 	enum { max_length = 1024 };
 	char data[max_length];
 
+	std::mutex updatesMutex;
+	std::list<std::string> updates;
 
 	typedef std::shared_ptr<TCPConnection> pointer;
 };
