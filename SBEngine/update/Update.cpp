@@ -36,7 +36,7 @@ Update::Update(void *network)  {
 #ifdef	CLIENT_MULTI
 	auto client = (TCPClient*)network;
 	ecs.addUpdate(111, [client, &ecs](){
-		ID player = ecs.filter<Mouse>()[0];
+		ID player = ecs.filter<Keyboard>()[0];
 		auto &keyboard = ecs.getComponentMap<Keyboard>()[player];
 		auto &rotation = ecs.getComponentMap<SceneNode>()[player].node->getRotation();
 
@@ -50,7 +50,9 @@ Update::Update(void *network)  {
 		out << rotation.X << rotation.Y << rotation.Z;
 		out << pressedKeys;
 
-		client->socket().send(boost::asio::buffer(out.str()));
+		auto oui = out.str();
+		if (client->socket()->is_open())
+			client->socket()->send(boost::asio::buffer(oui));
 	});
 	ecs.addUpdate(112, [client](){
 		client->mutex.lock();

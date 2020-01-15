@@ -2,6 +2,7 @@
 // Created by seb on 24/11/2019.
 //
 
+#include <iostream>
 #include "TCPServer.hpp"
 
 TCPServer::TCPServer(boost::asio::io_context &io_context, short port): ioContext(io_context),
@@ -22,6 +23,7 @@ void TCPServer::handleAccept(TCPConnection::pointer newConnection, const boost::
 	if (!error) {
 		newConnection->start();
 		connected.push_back(newConnection);
+		std::cout << "WTF LANCE TOI" << std::endl;
 		if (onConnection)
 			onConnection(newConnection);
 	}

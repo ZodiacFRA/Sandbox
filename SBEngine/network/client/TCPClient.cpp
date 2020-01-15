@@ -104,6 +104,6 @@ void TCPClient::check_deadline() {
 	deadline_.async_wait(boost::bind(&TCPClient::check_deadline, this));
 }
 
-tcp::socket &TCPClient::socket() {
-	return socket_;
+tcp::socket *TCPClient::socket() {
+	return &socket_;
 }

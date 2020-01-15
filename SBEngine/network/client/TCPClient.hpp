@@ -22,7 +22,7 @@ public:
 	void start(tcp::resolver::results_type endpoints);
 	void stop();
 
-	tcp::socket &socket();
+	tcp::socket *socket();
 
 private:
 	void start_connect(tcp::resolver::results_type::iterator endpoint_iter);
