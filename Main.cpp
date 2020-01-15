@@ -87,9 +87,9 @@ int main() {
 	ID id = ecs::Entity::getId();
 	ecs.addComponent<IMetaTriangleSelector*>(id);
 	ecs.getComponentMap<IMetaTriangleSelector*>()[id] = ecs.smgr->createMetaTriangleSelector();
-	// loadLevelFromFile("stress_test");
+	loadLevelFromFile("1");
 
-	auto selector = MapCreator::createMap();
+/*	auto selector = MapCreator::createMap();
 	PlayerCreator::createFpsCamera(PlayerCreator::createPlayer("./assets/sydney.md2", "./assets/sydney.bmp", vector3df(200, 200, 200), vector3df(0, 0, 0), selector));
 
 	ID player = ecs.getComponentMap<FpsCamera>()[ecs.filter<FpsCamera>()[0]].parent;
@@ -97,10 +97,10 @@ int main() {
 	ISceneNodeAnimator* anim = ecs.smgr->createCollisionResponseAnimator(ecs.getComponentMap<IMetaTriangleSelector*>()[id], node, node->getBoundingBox().MaxEdge, core::vector3df(0,0,0),core::vector3df(0,node->getBoundingBox().MaxEdge.Y,0));
 	ecs.getComponentMap<IMetaTriangleSelector*>()[id]->drop();
 	node->addAnimator(anim);
-	anim->drop();
+	anim->drop();*/
 #endif
 
-
+//TODO: think about the CLIENT-->SERVER tcp packet (possibly ID-KEYBOARD-ROTATION)
 	while(ecs.device->run()) {
 		long time = ecs::Time::get(TimeUnit::MicroSeconds);
 		ecs.update();

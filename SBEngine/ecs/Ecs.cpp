@@ -16,8 +16,8 @@ Ecs::Ecs() {
 	type = video::EDT_OPENGL;
 #endif
 
-	this->device = createDevice( type, dimension2d<u32>(1920, 1080), 16,
-			      true, true, false, keyboardEvent);
+	this->device = createDevice( type, dimension2d<u32>(1080, 720), 16,
+			      false, true, false, keyboardEvent);
 
 	device->setWindowCaption(L"Sandbox");
 	this->driver = device->getVideoDriver();

@@ -5,6 +5,7 @@
 #include <FpsCamera.hpp>
 #include <controllers/Keyboard.hpp>
 #include <network/client/TCPClient.hpp>
+#include <component/controllers/Mouse.hpp>
 #include "Update.hpp"
 
 Update::Update(void *network)  {
@@ -34,7 +35,24 @@ Update::Update(void *network)  {
 #endif
 #ifdef	CLIENT_MULTI
 	auto client = (TCPClient*)network;
-	ecs.addUpdate(101, [client](){
+	ecs.addUpdate(111, [client, &ecs](){
+		ID player = ecs.filter<Mouse>()[0];
+		auto &keyboard = ecs.getComponentMap<Keyboard>()[player];
+		auto &rotation = ecs.getComponentMap<SceneNode>()[player].node->getRotation();
+
+		std::string pressedKeys;
+		for (auto &elem : keyboard.keyMap)
+			if (elem.second.first)
+				pressedKeys += elem.first;
+
+		std::ostringstream out;
+		out << player;
+		out << rotation.X << rotation.Y << rotation.Z;
+		out << pressedKeys;
+
+		client->socket().send(boost::asio::buffer(out.str()));
+	});
+	ecs.addUpdate(112, [client](){
 		client->mutex.lock();
 		auto &node = Ecs::get().getComponentMap<SceneNode>();
 		while (client->pendingUpdates.size() != 0) {

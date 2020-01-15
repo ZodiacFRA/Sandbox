@@ -5,6 +5,6 @@
 #include "Entity.hpp"
 
 ID ecs::Entity::getId() {
-    thread_local static ID id = 0;
+    thread_local static ID id = 1;
     return (id++);
 }

@@ -20,8 +20,9 @@ public:
 	explicit TCPClient(boost::asio::io_context& io_context);
 
 	void start(tcp::resolver::results_type endpoints);
-
 	void stop();
+
+	tcp::socket &socket();
 
 private:
 	void start_connect(tcp::resolver::results_type::iterator endpoint_iter);
