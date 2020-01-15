@@ -42,9 +42,17 @@ Update::Update(void *network)  {
 				ss >> rot.X >> rot.Y >> rot.Z;
 				nodes[id].node->setRotation(rot);
 
-				std::string keys;
-				ss >> keys;
-				std::cout << "LOOK AT ME: " << keys << std::endl << std::endl;
+				bool empty;
+				ss >> empty;
+
+				if (!empty) {
+					std::string keys;
+					ss >> keys;
+					for (auto key : keys)
+						std::cout << (int)key << " ";
+					std::cout << std::endl;
+					std::cout << "LOOK AT ME: " << keys << std::endl << std::endl;
+				}
 			}
 			tcpSock->updates.clear();
 			tcpSock->updatesMutex.unlock();
@@ -61,14 +69,16 @@ Update::Update(void *network)  {
 		auto &keyboard = ecs.getComponentMap<Keyboard>()[player];
 		auto &rotation = ecs.getComponentMap<SceneNode>()[player].node->getRotation();
 
-		std::string pressedKeys;
+		std::string pressedKeys("A");
 		for (auto &elem : keyboard.keyMap)
 			if (elem.second.first)
 				pressedKeys += elem.first;
+		std::cout << "oui" << pressedKeys.size() << std::endl;
 
 		std::ostringstream out;
 		out << player << '\n';
 		out << rotation.X << '\n' << rotation.Y << '\n' << rotation.Z << '\n';
+		out << pressedKeys.empty() << '\n';
 		out << pressedKeys << '\n';
 
 		auto oui = out.str();
