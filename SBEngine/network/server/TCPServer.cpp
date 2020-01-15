@@ -13,7 +13,7 @@ TCPServer::TCPServer(boost::asio::io_context &io_context, short port): ioContext
 
 void TCPServer::startAccept() {
 	TCPConnection::pointer new_connection(new TCPConnection(ioContext));
-
+	std::cout << std::endl << acceptor.is_open() << std::endl;
 	acceptor.async_accept(new_connection->tcpSocket,
 			      boost::bind(&TCPServer::handleAccept, this, new_connection,
 					  boost::asio::placeholders::error));
