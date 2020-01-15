@@ -69,8 +69,8 @@ add_executable(Sandbox
         SBEngine/network/client/TCPClient.hpp)
 
 #target_compile_definitions(Sandbox PRIVATE CLIENT_SOLO)
-target_compile_definitions(Sandbox PRIVATE CLIENT_MULTI)
-#target_compile_definitions(Sandbox PRIVATE SERVER)
+#target_compile_definitions(Sandbox PRIVATE CLIENT_MULTI)
+target_compile_definitions(Sandbox PRIVATE SERVER)
 
 #add_executable(TCPTest
 #        SBEngine/network/server/TCPServer.cpp

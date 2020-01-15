@@ -26,6 +26,8 @@ void TCPServer::handleAccept(TCPConnection::pointer newConnection, const boost::
 		std::cout << "WTF LANCE TOI" << std::endl;
 		if (onConnection)
 			onConnection(newConnection);
+	} else {
+		std::cout << "c est la merde" << std::endl;
 	}
 	startAccept();
 }

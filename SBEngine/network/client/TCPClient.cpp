@@ -37,14 +37,14 @@ void TCPClient::handle_connect(const boost::system::error_code &ec, tcp::resolve
 	if (stopped_)
 		return;
 	if (!socket_.is_open()) {
-		std::cout << "Connect timed out\n";
+		std::cout << "Connect timed out" << std::endl;
 		start_connect(++endpoint_iter);
 	} else if (ec) {
-		std::cout << "Connect error: " << ec.message() << "\n";
+		std::cout << "Connect error: " << ec.message()  << "\t" << endpoint_iter->endpoint() << std::endl;
 		socket_.close();
 		start_connect(++endpoint_iter);
 	} else {
-		std::cout << "Connected to " << endpoint_iter->endpoint() << "\n";
+		std::cout << "Connected to " << endpoint_iter->endpoint() << std::endl;
 		start_read();
 		start_write();
 	}
