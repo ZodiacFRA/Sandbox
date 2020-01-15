@@ -31,6 +31,7 @@ Update::Update(void *network)  {
 	auto server = (TCPServer*)network;
 	ecs.addUpdate(101, [&ecs, server](){
 		auto nodes = ecs.getComponentMap<SceneNode>();
+		auto keyboards = ecs.getComponentMap<Keyboard>();
 		for (auto &tcpSock: server->connected) {
 			tcpSock->updatesMutex.lock();
 			for (auto &elem : tcpSock->updates) {
@@ -48,10 +49,10 @@ Update::Update(void *network)  {
 				if (!empty) {
 					std::string keys;
 					ss >> keys;
+					for (auto &key: keyboards[id].keyMap)
+						key.second.first = false;
 					for (auto key : keys)
-						std::cout << (int)key << " ";
-					std::cout << std::endl;
-					std::cout << "LOOK AT ME: " << keys << std::endl << std::endl;
+						keyboards[id].keyMap[(EKEY_CODE)key].first = true;
 				}
 			}
 			tcpSock->updates.clear();
@@ -69,7 +70,7 @@ Update::Update(void *network)  {
 		auto &keyboard = ecs.getComponentMap<Keyboard>()[player];
 		auto &rotation = ecs.getComponentMap<SceneNode>()[player].node->getRotation();
 
-		std::string pressedKeys("A");
+		std::string pressedKeys;
 		for (auto &elem : keyboard.keyMap)
 			if (elem.second.first)
 				pressedKeys += elem.first;
