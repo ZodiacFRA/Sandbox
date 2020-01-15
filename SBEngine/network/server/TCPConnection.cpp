@@ -29,7 +29,7 @@ void TCPConnection::handleRead(const boost::system::error_code& error, size_t by
 		std::istringstream in(data);
 		std::cout << in.str() << std::endl << std::endl;
 		start();
-		return();
+		return;
 		boost::asio::async_write(tcpSocket,
 					 boost::asio::buffer(data, bytes_transferred),
 					 boost::bind(&TCPConnection::handleWrite, this,
