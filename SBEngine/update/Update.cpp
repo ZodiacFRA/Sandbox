@@ -45,11 +45,12 @@ Update::Update(void *network)  {
 				bool empty;
 				ss >> empty;
 
+				for (auto &key: keyboards[id].keyMap)
+						key.second.first = false;
 				if (!empty) {
 					std::string keys;
 					ss >> keys;
-					for (auto &key: keyboards[id].keyMap)
-						key.second.first = false;
+
 					for (auto key : keys)
 						keyboards[id].keyMap[(EKEY_CODE)key].first = true;
 				}
