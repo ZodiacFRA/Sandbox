@@ -124,8 +124,9 @@ void Update::online(TCPServer *server) {
 
 		ss << id << "\n";
 		ss << pos.X << "\n" << pos.Y << "\n" << pos.Z << "\n";
-		std::cout << pos.X << "\n" << pos.Y << "\n" << pos.Z << std::endl;
 		ss << rot.X << "\n" << rot.Y << "\n" << rot.Z << '\0';
+		std::cout << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
+		std::cout << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
 		std::string out = ss.str();
 		for (auto mec: server->connected) {
 			if (mec->toRemove)
