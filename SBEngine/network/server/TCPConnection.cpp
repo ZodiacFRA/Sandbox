@@ -38,6 +38,7 @@ void TCPConnection::handleRead(const boost::system::error_code& error, size_t by
 						     boost::asio::placeholders::error));
 		start();
 	} else {
+		std::cout << "Client deconnection" << std::endl << std::endl;
 		toRemove = true;
 	}
 }
@@ -51,6 +52,7 @@ void TCPConnection::handleWrite(const boost::system::error_code& error) {
 						    boost::asio::placeholders::error,
 						    boost::asio::placeholders::bytes_transferred));
 	} else {
+		std::cout << "Client deconnection" << std::endl << std::endl;
 		toRemove = true;
 	}
 }

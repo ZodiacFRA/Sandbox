@@ -20,6 +20,7 @@ void TCPServer::startAccept() {
 
 void TCPServer::handleAccept(TCPConnection::pointer newConnection, const boost::system::error_code &error) {
 	if (!error) {
+		std::cout << "New Connection" << std::endl << std::endl;
 		newConnection->start();
 		connected.push_back(newConnection);
 		if (onConnection)
