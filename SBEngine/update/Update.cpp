@@ -19,9 +19,11 @@ Update::Update(void *network)  {
 		Update::speed();
 	});
 #endif
+#ifndef SERVER
 	ecs.addUpdate(20, [](){
 		Update::fpsCamera();
 	});
+#endif
 	ecs.addUpdate(100, [&ecs](){
 		ecs.driver->beginScene(true, true, SColor(255,100,101,140));
 		ecs.smgr->drawAll();

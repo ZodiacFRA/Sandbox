@@ -110,10 +110,10 @@ void loadLevelFromFile(std::string levelName)
 		else if (tmp.type == object_type::PLAYER) {
 			std::cout << "Created player" << '\n';
 #ifdef SERVER
+			PlayerCreator::createPlayer(tmp_mesh_path, tmp.tex_name, tmp.pos, tmp.rot, nullptr);
+#else
 			PlayerCreator::createFpsCamera(
-#endif
 				PlayerCreator::createPlayer(tmp_mesh_path, tmp.tex_name, tmp.pos, tmp.rot, nullptr)
-#ifdef SERVER
 				);
 #endif
 		} else if (tmp.type == object_type::LIGHT) {
