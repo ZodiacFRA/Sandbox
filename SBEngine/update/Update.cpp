@@ -14,9 +14,11 @@ Update::Update(void *network)  {
 	ecs.addUpdate(20, [](){
 		Update::keyboard();
 	});
+#ifndef CLIENT_MULTI
 	ecs.addUpdate(20, [](){
 		Update::speed();
 	});
+#endif
 	ecs.addUpdate(20, [](){
 		Update::fpsCamera();
 	});
@@ -73,7 +75,7 @@ Update::Update(void *network)  {
 		std::string pressedKeys;
 		for (auto &elem : keyboard.keyMap)
 			if (elem.second.first)
-				pressedKeys += elem.first;
+				pressedKeys += (char)elem.first;
 
 		std::ostringstream out;
 		out << player << '\n';
@@ -114,14 +116,15 @@ void Update::online(TCPServer *server) {
 	auto &node = ecs.getComponentMap<SceneNode>();
 	auto ids = ecs.filter</*Online, */SceneNode>();
 	bool doClean = false;
-
+	std::cout << std::endl << std::endl << std::endl << std::endl;
 	for (const auto &id: ids) {
 		auto pos = node[id].node->getPosition();
 		auto rot = node[id].node->getRotation();
 		std::stringstream ss;
 
-		ss << id << std::endl;
-		ss << pos.X << "\n" << pos.Y << "\n" << pos.Z << std::endl;
+		ss << id << "\n";
+		ss << pos.X << "\n" << pos.Y << "\n" << pos.Z << "\n";
+		std::cout << pos.X << "\n" << pos.Y << "\n" << pos.Z << std::endl;
 		ss << rot.X << "\n" << rot.Y << "\n" << rot.Z << '\0';
 		std::string out = ss.str();
 		for (auto mec: server->connected) {
