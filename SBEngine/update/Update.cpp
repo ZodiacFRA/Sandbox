@@ -11,7 +11,6 @@
 Update::Update(void *network)  {
 	auto &ecs = Ecs::get();
 
-	/// Update Speed
 	ecs.addUpdate(20, [](){
 		Update::keyboard();
 	});
@@ -51,7 +50,7 @@ Update::Update(void *network)  {
 					ss >> keys;
 					for (auto &key: keyboards[id].keyMap)
 						key.second.first = false;
-					for (auto key : keys)
+					for (auto &key : keys)
 						keyboards[id].keyMap[(EKEY_CODE)key].first = true;
 				}
 			}
@@ -74,7 +73,6 @@ Update::Update(void *network)  {
 		for (auto &elem : keyboard.keyMap)
 			if (elem.second.first)
 				pressedKeys += elem.first;
-		std::cout << "oui" << pressedKeys.size() << std::endl;
 
 		std::ostringstream out;
 		out << player << '\n';
