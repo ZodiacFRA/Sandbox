@@ -112,16 +112,14 @@ Update::Update(void *network)  {
 void Update::online(TCPServer *server) {
 	auto &ecs = Ecs::get();
 	auto &node = ecs.getComponentMap<SceneNode>();
-	auto ids = ecs.filter<Online, SceneNode>();
+	auto ids = ecs.filter</*Online, */SceneNode>();
 	bool doClean = false;
 
 	for (const auto &id: ids) {
 		auto pos = node[id].node->getPosition();
 		auto rot = node[id].node->getRotation();
 		std::stringstream ss;
-		/*ss << "ID: " << id << std::endl;
-		ss << "Position: " << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
-		ss << "Rotation: " << rot.X << " " << rot.Y << " " << rot.Z << '\0';*/
+
 		ss << id << std::endl;
 		ss << pos.X << "\n" << pos.Y << "\n" << pos.Z << std::endl;
 		ss << rot.X << "\n" << rot.Y << "\n" << rot.Z << '\0';
