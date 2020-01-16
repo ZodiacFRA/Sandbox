@@ -14,11 +14,9 @@ Update::Update(void *network)  {
 	ecs.addUpdate(20, [](){
 		Update::keyboard();
 	});
-#ifndef CLIENT_MULTI
 	ecs.addUpdate(20, [](){
 		Update::speed();
 	});
-#endif
 #ifndef SERVER
 	ecs.addUpdate(20, [](){
 		Update::fpsCamera();
