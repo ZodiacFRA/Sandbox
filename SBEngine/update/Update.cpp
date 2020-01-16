@@ -116,7 +116,6 @@ void Update::online(TCPServer *server) {
 	auto &node = ecs.getComponentMap<SceneNode>();
 	auto ids = ecs.filter</*Online, */SceneNode>();
 	bool doClean = false;
-	std::cout << std::endl << std::endl << std::endl << std::endl;
 	for (const auto &id: ids) {
 		auto pos = node[id].node->getPosition();
 		auto rot = node[id].node->getRotation();
@@ -125,8 +124,6 @@ void Update::online(TCPServer *server) {
 		ss << id << "\n";
 		ss << pos.X << "\n" << pos.Y << "\n" << pos.Z << "\n";
 		ss << rot.X << "\n" << rot.Y << "\n" << rot.Z << '\0';
-		std::cout << pos.X << " " << pos.Y << " " << pos.Z << std::endl;
-		std::cout << rot.X << " " << rot.Y << " " << rot.Z << std::endl;
 		std::string out = ss.str();
 		for (auto mec: server->connected) {
 			if (mec->toRemove)
