@@ -29,8 +29,8 @@ Update::Update(void *network)  {
 #ifdef	SERVER
 	auto server = (TCPServer*)network;
 	ecs.addUpdate(101, [&ecs, server](){
-		auto nodes = ecs.getComponentMap<SceneNode>();
-		auto keyboards = ecs.getComponentMap<Keyboard>();
+		auto &nodes = ecs.getComponentMap<SceneNode>();
+		auto &keyboards = ecs.getComponentMap<Keyboard>();
 		for (auto &tcpSock: server->connected) {
 			tcpSock->updatesMutex.lock();
 			for (auto &elem : tcpSock->updates) {
@@ -50,7 +50,7 @@ Update::Update(void *network)  {
 					ss >> keys;
 					for (auto &key: keyboards[id].keyMap)
 						key.second.first = false;
-					for (auto &key : keys)
+					for (auto key : keys)
 						keyboards[id].keyMap[(EKEY_CODE)key].first = true;
 				}
 			}
